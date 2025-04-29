@@ -2,7 +2,7 @@ import {
   handleInversion,
   seperateChordNameAndBassNote,
   getRootNoteAndChordTypeFromName,
-  getChordNotesFromStructure,
+  getNotesFromChordType,
 } from "../src/util";
 
 test('test inversions', () => {
@@ -25,7 +25,7 @@ test('test root note and chord type parsing', () => {
 });
 
 test('test note retrieval', () => {
-  expect(getChordNotesFromStructure('C', 'maj7')).toEqual(['C', 'E', 'G', 'B']);
-  expect(getChordNotesFromStructure('C', '6/9')).toEqual(['C', 'E', 'G', 'A', 'D']);
-  expect(getChordNotesFromStructure('C', '')).toEqual(['C', 'E', 'G']);
+  expect(getNotesFromChordType('C', 'maj7')).toEqual(['C', 'E', 'G', 'B']);
+  expect(getNotesFromChordType('C', '6/9')).toEqual(['C', 'E', 'G', 'A', 'D']);
+  expect(getNotesFromChordType('C', '')).toEqual(['C', 'E', 'G']);
 });

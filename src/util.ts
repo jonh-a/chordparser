@@ -4,7 +4,7 @@ export const notes = [
   'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#',
 ];
 
-export const chordStructures: { [index: string]: number[] } = {
+export const chordTypes: { [index: string]: number[] } = {
   // triads
   'maj': [0, 4, 7],
   '(b5)': [0, 4, 6],
@@ -127,19 +127,13 @@ export const getRootNoteAndChordTypeFromName = (chordName: string): {
   return { chordType, rootNote }
 };
 
-export const getChordNotesFromStructure = (rootNote: string, chordType: string): string[] => {
-  /*
-    Index and append each matching chord note to the array.
-  */
+export const getNotesFromChordType = (rootNote: string, chordType: string): string[] => {
   const rootNoteIdx: number = notes?.indexOf(rootNote);
-  const chordNotes: string[] = [];
+  const chordStructure = chordTypes[chordType];
 
-  const chordStructure = chordStructures[chordType];
-  chordStructure?.forEach((n: number) => {
-    chordNotes.push(notes[rootNoteIdx + n]);
-  });
-
-  return chordNotes;
+  return chordStructure.map((n: number) => {
+    return notes[rootNoteIdx + n]
+  })
 };
 
 export const checkSubset = (parentArray: string[], subArray: string[]): boolean => {
