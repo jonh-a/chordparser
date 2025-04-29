@@ -1,5 +1,5 @@
-import { getChordNotesByName, getChordNameFromNotes } from "./parser";
-import { Chord } from "./types";
+import { getChordNotesByName, getChordNameFromNotes } from './parser';
+import { Chord } from './types';
 
 export {
   getChordNotesByName,

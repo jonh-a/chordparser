@@ -3,7 +3,7 @@ import {
   seperateChordNameAndBassNote,
   getRootNoteAndChordTypeFromName,
   getNotesFromChordType,
-} from "../src/util";
+} from '../src/util';
 
 test('test inversions', () => {
   expect(handleInversion(['A', 'B', 'C', 'D'], 1)).toEqual(['B', 'C', 'D', 'A']);

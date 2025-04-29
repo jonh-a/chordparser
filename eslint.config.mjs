@@ -7,7 +7,13 @@ export default tseslint.config(
   {
     ignores: ['dist/**/*', 'jest.config.js'],
     rules: {
-      semi: 'error'
-    }
+      semi: 'error',
+      quotes: ['error', 'single'],
+      'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
+      'no-console': 'error',
+      'no-unused-vars': 'error',
+      'comma-dangle': ['error', 'always-multiline'],
+      'max-len': ['error', 100],
+    },
   },
 );

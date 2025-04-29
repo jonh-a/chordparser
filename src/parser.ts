@@ -1,4 +1,4 @@
-import { Chord } from "./types";
+import { Chord } from './types';
 import {
   swapFlatsWithSharps,
   chordTypes,
@@ -10,7 +10,7 @@ import {
   checkSubset,
   removeDuplicateNotes,
   swapSharpsWithFlats,
-} from "./util";
+} from './util';
 
 export const getChordNotesByName = (chord: Chord): Chord => {
   if (!chord.name || chord.name === '') return { notes: [], name: '' };
@@ -20,9 +20,10 @@ export const getChordNotesByName = (chord: Chord): Chord => {
 
   const { rootNote, chordType } = getRootNoteAndChordTypeFromName(chordName);
 
-
   const { notes, scale } = getNotesInScale(rootNote, chordType);
-  const transformedBassNote = scale === 'flats' ? swapSharpsWithFlats(bassNote) : swapFlatsWithSharps(bassNote);
+  const transformedBassNote = scale === 'flats' 
+    ? swapSharpsWithFlats(bassNote) 
+    : swapFlatsWithSharps(bassNote);
 
   // If no matching chord type found, return.
   if (!Object.keys(chordTypes).includes(chordType)) return { notes: [], name: chord.name };
@@ -48,7 +49,9 @@ export const getChordNameFromNotes = (notes: string[]): {
   exactMatches: Chord[],
   possibleMatches: Chord[],
 } => {
-  const normalizedNotes = removeDuplicateNotes(notes.map((note: string) => swapFlatsWithSharps(note)));
+  const normalizedNotes = removeDuplicateNotes(notes.map(
+    (note: string) => swapFlatsWithSharps(note),
+  ));
 
   const allPossibleChordTypes = normalizedNotes
     .map((rootNote: string) => (
@@ -66,7 +69,7 @@ export const getChordNameFromNotes = (notes: string[]): {
 
   const exactMatches = possibleMatches
     .filter((chordType: Chord) => (
-      JSON.stringify([...chordType.notes].sort()) === JSON.stringify([...normalizedNotes].sort()))
+      JSON.stringify([...chordType.notes].sort()) === JSON.stringify([...normalizedNotes].sort())),
     );
 
   return { exactMatches, possibleMatches };

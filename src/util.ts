@@ -10,7 +10,10 @@ export const notesAsFlats = [
   'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab',
 ];
 
-export const getNotesInScale = (rootNote: string, chordType: string): { notes: string[], scale: 'flats' | 'sharps' } => {
+export const getNotesInScale = (
+  rootNote: string, 
+  chordType: string,
+): { notes: string[], scale: 'flats' | 'sharps' } => {
   if (['F#', 'C#', 'G#', 'D#', 'A#'].includes(rootNote)) {
     return { notes: notesAsSharps, scale: 'sharps' };
   }
@@ -99,20 +102,20 @@ export const chordTypes: {
 };
 
 export const swapFlatsWithSharps = (str: string) => {
-  if (str?.startsWith("Bb")) return str.replace('Bb', 'A#');
-  if (str?.startsWith("Db")) return str.replace('Db', 'C#');
-  if (str?.startsWith("Eb")) return str.replace('Eb', 'D#');
-  if (str?.startsWith("Gb")) return str.replace('Gb', 'F#');
-  if (str?.startsWith("Ab")) return str.replace('Ab', 'G#');
+  if (str?.startsWith('Bb')) return str.replace('Bb', 'A#');
+  if (str?.startsWith('Db')) return str.replace('Db', 'C#');
+  if (str?.startsWith('Eb')) return str.replace('Eb', 'D#');
+  if (str?.startsWith('Gb')) return str.replace('Gb', 'F#');
+  if (str?.startsWith('Ab')) return str.replace('Ab', 'G#');
   return str;
 };
 
 export const swapSharpsWithFlats = (str: string) => {
-  if (str?.startsWith("A#")) return str.replace('A#', 'Bb');
-  if (str?.startsWith("C#")) return str.replace('C#', 'Db');
-  if (str?.startsWith("D#")) return str.replace('D#', 'Eb');
-  if (str?.startsWith("F#")) return str.replace('F#', 'Gb');
-  if (str?.startsWith("G#")) return str.replace('G#', 'Ab');
+  if (str?.startsWith('A#')) return str.replace('A#', 'Bb');
+  if (str?.startsWith('C#')) return str.replace('C#', 'Db');
+  if (str?.startsWith('D#')) return str.replace('D#', 'Eb');
+  if (str?.startsWith('F#')) return str.replace('F#', 'Gb');
+  if (str?.startsWith('G#')) return str.replace('G#', 'Ab');
   return str;
 };
 
