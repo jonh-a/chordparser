@@ -9,4 +9,5 @@ export interface ChordNotes {
   bassNote?: string | null
   name?: string
   inversion?: number | null
+  rootNote?: string | null
 }

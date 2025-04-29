@@ -1,4 +1,4 @@
-import { getChordNotesByName } from '../src/parser';
+import { getChordNotesByName, getChordNameFromNotes } from '../src/parser';
 
 test('test major triads', () => {
   expect(getChordNotesByName({ name: 'C' })).toEqual({
@@ -92,3 +92,10 @@ test('test inversions', () => {
     inversion: 2,
   });
 });
+
+test('test parsing name from notes', () => {
+  expect(getChordNameFromNotes(['C', 'E', 'G']).exactMatches.length).toEqual(2)
+  expect(getChordNameFromNotes(['G', 'C', 'E']).exactMatches.length).toEqual(2)
+  expect(getChordNameFromNotes(['G', 'C', 'E', 'B']).exactMatches.length).toEqual(1)
+  expect(getChordNameFromNotes(['G', 'Bb', 'Eb']).exactMatches.length).toEqual(2)
+})

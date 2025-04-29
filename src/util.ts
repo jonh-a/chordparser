@@ -141,3 +141,9 @@ export const getChordNotesFromStructure = (rootNote: string, chordType: string):
 
   return chordNotes;
 };
+
+export const checkSubset = (parentArray: string[], subsetArray: string[]) => {
+  return subsetArray.every((el) => {
+    return parentArray.includes(el)
+  })
+}

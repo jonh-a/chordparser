@@ -7,6 +7,7 @@ import {
   seperateChordNameAndBassNote,
   getRootNoteAndChordTypeFromName,
   getChordNotesFromStructure,
+  checkSubset,
 } from "./util";
 
 export const getChordNotesByName = (chord: ChordName): ChordNotes => {
@@ -40,3 +41,30 @@ export const getChordNotesByName = (chord: ChordName): ChordNotes => {
     inversion: chord.inversion ?? null,
   };
 };
+
+export const getChordNameFromNotes = (notes: string[]): {
+  exactMatches: ChordNotes[],
+  possibleMatches: ChordNotes[],
+} => {
+  const normalizedNotes = notes.map((note: string) => swapFlatsWithSharps(note));
+
+  const allPossibleChordTypes = normalizedNotes
+    .map((rootNote: string) => {
+      const allPossibleChordTypesFromRootNote = Object.keys(chordStructures)
+        .map((chordType: string) => ({
+          name: `${rootNote}${chordType}`,
+          notes: getChordNotesFromStructure(rootNote, chordType),
+          rootNote,
+        }));
+      return allPossibleChordTypesFromRootNote
+    })
+    .flat()
+
+  const possibleMatches = allPossibleChordTypes
+    .filter((chordType: ChordNotes) => checkSubset(chordType.notes, normalizedNotes));
+
+  const exactMatches = possibleMatches
+    .filter((chordType: ChordNotes) => JSON.stringify(chordType.notes.sort()) === JSON.stringify(normalizedNotes.sort()));
+
+  return { exactMatches, possibleMatches };
+}
