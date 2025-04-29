@@ -56,15 +56,17 @@ export const getChordNameFromNotes = (notes: string[]): {
           notes: getChordNotesFromStructure(rootNote, chordType),
           rootNote,
         }));
-      return allPossibleChordTypesFromRootNote
+      return allPossibleChordTypesFromRootNote;
     })
-    .flat()
+    .flat();
 
   const possibleMatches = allPossibleChordTypes
     .filter((chordType: ChordNotes) => checkSubset(chordType.notes, normalizedNotes));
 
   const exactMatches = possibleMatches
-    .filter((chordType: ChordNotes) => JSON.stringify(chordType.notes.sort()) === JSON.stringify(normalizedNotes.sort()));
+    .filter((chordType: ChordNotes) => (
+      JSON.stringify([...chordType.notes].sort()) === JSON.stringify([...normalizedNotes].sort()))
+    );
 
   return { exactMatches, possibleMatches };
-}
+};
