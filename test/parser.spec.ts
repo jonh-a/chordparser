@@ -14,13 +14,13 @@ test('test major triads', () => {
     inversion: null,
   });
   expect(getChordNotesByName({ name: 'Db7' })).toEqual({
-    notes: ['C#', 'F', 'G#', 'B'],
-    name: 'C#7',
+    notes: ['Db', 'F', 'Ab', 'B'],
+    name: 'Db7',
     bassNote: null,
     inversion: null,
   });
   expect(getChordNotesByName({ name: 'Cm7' })).toEqual({
-    notes: ['C', 'D#', 'G', 'A#'],
+    notes: ['C', 'Eb', 'G', 'Bb'],
     name: 'Cm7',
     bassNote: null,
     inversion: null,
@@ -47,7 +47,7 @@ test('test triads with bass notes', () => {
     inversion: null,
   });
   expect(getChordNotesByName({ name: 'Cm7/G' })).toEqual({
-    notes: ['G', 'C', 'D#', 'G', 'A#'],
+    notes: ['G', 'C', 'Eb', 'G', 'Bb'],
     name: 'Cm7',
     bassNote: 'G',
     inversion: null,
@@ -58,10 +58,10 @@ test('test triads with bass notes', () => {
     bassNote: 'G',
     inversion: null,
   });
-  expect(getChordNotesByName({ name: 'Db7/Bb' })).toEqual({
-    notes: ['A#', 'C#', 'F', 'G#', 'B'],
-    name: 'C#7',
-    bassNote: 'A#',
+  expect(getChordNotesByName({ name: 'Db7/Ab' })).toEqual({
+    notes: ['Ab', 'Db', 'F', 'Ab', 'B'],
+    name: 'Db7',
+    bassNote: 'Ab',
     inversion: null,
   });
 });

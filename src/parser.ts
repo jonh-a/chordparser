@@ -2,13 +2,14 @@ import { Chord } from "./types";
 import {
   swapFlatsWithSharps,
   chordTypes,
-  notes,
+  getNotesInScale,
   handleInversion,
   seperateChordNameAndBassNote,
   getRootNoteAndChordTypeFromName,
   getNotesFromChordType,
   checkSubset,
   removeDuplicateNotes,
+  swapSharpsWithFlats,
 } from "./util";
 
 export const getChordNotesByName = (chord: Chord): Chord => {
@@ -17,11 +18,11 @@ export const getChordNotesByName = (chord: Chord): Chord => {
   // Extract base chord name and bass note, if the chord is a slash chord.
   const { chordName, bassNote } = seperateChordNameAndBassNote(chord.name)
 
-  // Flats in the chord name are transformed to sharps for consistent indexing.
-  const transformedChordName = swapFlatsWithSharps(chordName);
-  const transformedBassNote = swapFlatsWithSharps(bassNote)
+  const { rootNote, chordType } = getRootNoteAndChordTypeFromName(chordName)
 
-  const { chordType, rootNote } = getRootNoteAndChordTypeFromName(transformedChordName)
+
+  const { notes, scale } = getNotesInScale(rootNote, chordType)
+  const transformedBassNote = scale === 'flats' ? swapSharpsWithFlats(bassNote) : swapFlatsWithSharps(bassNote)
 
   // If no matching chord type found, return.
   if (!Object.keys(chordTypes).includes(chordType)) return { notes: [], name: chord.name };
@@ -38,7 +39,7 @@ export const getChordNotesByName = (chord: Chord): Chord => {
   return {
     notes: chordNotes,
     bassNote: transformedBassNote ?? null,
-    name: transformedChordName,
+    name: chordName,
     inversion: chord.inversion ?? null,
   };
 };
