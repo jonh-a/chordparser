@@ -11,19 +11,32 @@ export const notesAsFlats = [
 ];
 
 export const getNotesInScale = (rootNote: string, chordType: string): { notes: string[], scale: 'flats' | 'sharps' } => {
-  if (['F#', 'C#', 'G#', 'D#', 'A#'].includes(rootNote)) return { notes: notesAsSharps, scale: 'sharps' };
-  if (['Gb', 'Db', 'Ab', 'Eb', 'Bb'].includes(rootNote)) return { notes: notesAsFlats, scale: 'flats' };
+  if (['F#', 'C#', 'G#', 'D#', 'A#'].includes(rootNote)) {
+    return { notes: notesAsSharps, scale: 'sharps' };
+  }
+  if (['Gb', 'Db', 'Ab', 'Eb', 'Bb'].includes(rootNote)) {
+    return { notes: notesAsFlats, scale: 'flats' };
+  }
+  
   if (['major', 'neither'].includes(chordTypes[chordType].key)) {
-    if (['G', 'D', 'A', 'E', 'B', 'F#', 'C#'].includes(rootNote)) return { notes: notesAsSharps, scale: 'sharps' };
-    if (['F', 'Bb', 'Eb', 'Ab', 'Db', 'Gb', 'Cb'].includes(rootNote)) return { notes: notesAsFlats, scale: 'flats' };
+    if (['G', 'D', 'A', 'E', 'B', 'F#', 'C#'].includes(rootNote)) {
+      return { notes: notesAsSharps, scale: 'sharps' };
+    }
+    if (['F', 'Bb', 'Eb', 'Ab', 'Db', 'Gb', 'Cb'].includes(rootNote)) {
+      return { notes: notesAsFlats, scale: 'flats' };
+    }
   }
   else if (chordTypes[chordType].key === 'minor') {
-    if (['E', 'B', 'F#', 'C#', 'G#', 'D#', 'A#'].includes(rootNote)) return { notes: notesAsSharps, scale: 'sharps' };
-    if (['D', 'G', 'C', 'F', 'Bb', 'Eb', 'Ab'].includes(rootNote)) return { notes: notesAsFlats, scale: 'flats' };
+    if (['E', 'B', 'F#', 'C#', 'G#', 'D#', 'A#'].includes(rootNote)) {
+      return { notes: notesAsSharps, scale: 'sharps' };
+    }
+    if (['D', 'G', 'C', 'F', 'Bb', 'Eb', 'Ab'].includes(rootNote)) {
+      return { notes: notesAsFlats, scale: 'flats' };
+    }
   }
 
-  return { notes: notesAsSharps, scale: 'sharps' }
-}
+  return { notes: notesAsSharps, scale: 'sharps' };
+};
 
 export const chordTypes: {
   [index: string]: { structure: number[]; key: 'major' | 'minor' | 'neither' }
@@ -83,7 +96,7 @@ export const chordTypes: {
   'maj13': { structure: [0, 4, 7, 11, 14, 17, 21], key: 'major' },
   'm13': { structure: [0, 3, 7, 11, 14, 17, 21], key: 'minor' },
   'min13': { structure: [0, 4, 7, 11, 14, 17, 21], key: 'neither' },
-}
+};
 
 export const swapFlatsWithSharps = (str: string) => {
   if (str?.startsWith("Bb")) return str.replace('Bb', 'A#');
@@ -128,7 +141,7 @@ export const seperateChordNameAndBassNote = (rawChordName: string): {
     ? `${rawChordName?.split('/')?.[0]}/${rawChordName?.split('/')?.[1]}`
     : rawChordName?.split('/')?.[0];
 
-  return { chordName, bassNote }
+  return { chordName, bassNote };
 };
 
 export const getRootNoteAndChordTypeFromName = (chordName: string): {
@@ -147,17 +160,17 @@ export const getRootNoteAndChordTypeFromName = (chordName: string): {
   const chordType = chordName?.substring(splitIdx + 1)?.trim();
   const rootNote = chordName?.substring(0, splitIdx + 1)?.trim();
 
-  return { chordType, rootNote }
+  return { chordType, rootNote };
 };
 
 export const getNotesFromChordType = (rootNote: string, chordType: string): string[] => {
-  const { notes } = getNotesInScale(rootNote, chordType)
+  const { notes } = getNotesInScale(rootNote, chordType);
   const rootNoteIdx: number = notes?.indexOf(rootNote);
   const chordStructure = chordTypes[chordType].structure;
 
   return chordStructure.map((n: number) => {
-    return notes[rootNoteIdx + n]
-  })
+    return notes[rootNoteIdx + n];
+  });
 };
 
 export const checkSubset = (parentArray: string[], subArray: string[]): boolean => {

@@ -6,5 +6,8 @@ export default tseslint.config(
   tseslint.configs.recommended,
   {
     ignores: ['dist/**/*', 'jest.config.js'],
+    rules: {
+      semi: 'error'
+    }
   },
 );

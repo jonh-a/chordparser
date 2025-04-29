@@ -16,18 +16,18 @@ export const getChordNotesByName = (chord: Chord): Chord => {
   if (!chord.name || chord.name === '') return { notes: [], name: '' };
 
   // Extract base chord name and bass note, if the chord is a slash chord.
-  const { chordName, bassNote } = seperateChordNameAndBassNote(chord.name)
+  const { chordName, bassNote } = seperateChordNameAndBassNote(chord.name);
 
-  const { rootNote, chordType } = getRootNoteAndChordTypeFromName(chordName)
+  const { rootNote, chordType } = getRootNoteAndChordTypeFromName(chordName);
 
 
-  const { notes, scale } = getNotesInScale(rootNote, chordType)
-  const transformedBassNote = scale === 'flats' ? swapSharpsWithFlats(bassNote) : swapFlatsWithSharps(bassNote)
+  const { notes, scale } = getNotesInScale(rootNote, chordType);
+  const transformedBassNote = scale === 'flats' ? swapSharpsWithFlats(bassNote) : swapFlatsWithSharps(bassNote);
 
   // If no matching chord type found, return.
   if (!Object.keys(chordTypes).includes(chordType)) return { notes: [], name: chord.name };
 
-  let chordNotes = getNotesFromChordType(rootNote, chordType)
+  let chordNotes = getNotesFromChordType(rootNote, chordType);
 
   if (chord.inversion) chordNotes = handleInversion(chordNotes, chord.inversion);
 
@@ -51,14 +51,14 @@ export const getChordNameFromNotes = (notes: string[]): {
   const normalizedNotes = removeDuplicateNotes(notes.map((note: string) => swapFlatsWithSharps(note)));
 
   const allPossibleChordTypes = normalizedNotes
-    .map((rootNote: string) => {
-      return Object.keys(chordTypes)
+    .map((rootNote: string) => (
+      Object.keys(chordTypes)
         .map((chordType: string) => ({
           name: `${rootNote}${chordType}`,
           notes: getNotesFromChordType(rootNote, chordType),
           rootNote,
-        }));
-    })
+        }))
+    ))
     .flat();
 
   const possibleMatches = allPossibleChordTypes
