@@ -1,54 +1,42 @@
-import { Chord } from "./types";
-import { swapFlatsWithSharps, chordStructures, notes } from "./util";
+import { ChordName, ChordNotes } from "./types";
+import {
+  swapFlatsWithSharps,
+  chordStructures,
+  notes,
+  handleInversion,
+  seperateChordNameAndBassNote,
+  getRootNoteAndChordTypeFromName,
+  getChordNotesFromStructure,
+} from "./util";
 
-export const getChordNotesByName = (chord: Chord): string[] => {
-  /*
-  Given a chord, return the associated notes.
-  */
-  const bassNote = chord.name?.endsWith('9') ? '' : chord.name?.split('/')?.[1];
-  if (bassNote) chord.name = chord.name?.split('/')?.[0];
+export const getChordNotesByName = (chord: ChordName): ChordNotes => {
+  if (!chord.name || chord.name === '') return { notes: [], name: '' };
 
-  if (!chord.name || chord.name === '') return [];
+  // Extract base chord name and bass note, if the chord is a slash chord.
+  const { chordName, bassNote } = seperateChordNameAndBassNote(chord.name)
 
-  const transformedChordName = swapFlatsWithSharps(chord.name);
+  // Flats in the chord name are transformed to sharps for consistent indexing.
+  const transformedChordName = swapFlatsWithSharps(chordName);
+  const transformedBassNote = swapFlatsWithSharps(bassNote)
 
-  /* 
-    Split the chord into root note and chord type either at a space 
-    or immediately after the flat/sharp notation.
-    Otherwise just split after first character.
-  */
-  let splitIdx = 0;
-  if (transformedChordName.includes(' ')) splitIdx = transformedChordName.indexOf(' ');
-  if (transformedChordName?.[1] === '#' || transformedChordName?.[1] === 'b') splitIdx = 1;
+  const { chordType, rootNote } = getRootNoteAndChordTypeFromName(transformedChordName)
 
-  const rootNote = transformedChordName?.substring(0, splitIdx + 1)?.trim();
-  const chordType = transformedChordName?.substring(splitIdx + 1)?.trim();
+  // If no matching chord type found, return.
+  if (!Object.keys(chordStructures).includes(chordType)) return { notes: [], name: chord.name };
 
-  /* If no chord type found, return */
-  if (!Object.keys(chordStructures).includes(chordType)) return [];
+  let chordNotes = getChordNotesFromStructure(rootNote, chordType)
 
-  const rootNoteIdx: number = notes?.indexOf(rootNote);
-  let chordNotes: string[] = [];
+  if (chord.inversion) chordNotes = handleInversion(chordNotes, chord.inversion);
 
-  const chordStructure = chordStructures[chordType];
-  chordStructure?.forEach((n: number) => {
-    chordNotes.push(notes[rootNoteIdx + n]);
-  });
-
-  if (chord.inversion) {
-    chordNotes = handleInversion(chordNotes, chord.inversion);
+  // Prepend the bass note, if there is one, to the array of notes.
+  if (transformedBassNote && notes.indexOf(transformedBassNote) > -1) {
+    chordNotes.unshift(transformedBassNote);
   }
 
-  if (bassNote && notes.indexOf(bassNote) > -1) {
-    chordNotes.unshift(bassNote);
-  }
-
-  return chordNotes;
-};
-
-const handleInversion = (notes: string[], inversion: number): string[] => {
-  const notesBeforeInversion = notes.slice(0, inversion);
-  const notesAfterInversion = notes.slice(inversion);
-
-  return [...notesAfterInversion, ...notesBeforeInversion];
+  return {
+    notes: chordNotes,
+    bassNote: transformedBassNote ?? null,
+    name: transformedChordName,
+    inversion: chord.inversion ?? null,
+  };
 };

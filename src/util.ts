@@ -79,3 +79,65 @@ export const swapSharpsWithFlats = (str: string) => {
   if (str?.startsWith("G#")) return str.replace('G#', 'Ab');
   return str;
 };
+
+export const handleInversion = (notes: string[], inversion: number): string[] => {
+  const notesBeforeInversion = notes.slice(0, inversion);
+  const notesAfterInversion = notes.slice(inversion);
+
+  return [...notesAfterInversion, ...notesBeforeInversion];
+};
+
+export const seperateChordNameAndBassNote = (rawChordName: string): {
+  chordName: string,
+  bassNote: string | null
+} => {
+  let chordName: string = rawChordName;
+
+  /*
+    6/9 chords need to be handled specifically so that the 9 isn't parsed as a slash chord.
+  */
+  const isSixNineChord = rawChordName?.includes('6/9');
+  const bassNote = isSixNineChord
+    ? rawChordName?.split('/')?.[2]
+    : rawChordName?.split('/')?.[1];
+
+  if (bassNote) chordName = isSixNineChord
+    ? `${rawChordName?.split('/')?.[0]}/${rawChordName?.split('/')?.[1]}`
+    : rawChordName?.split('/')?.[0];
+
+  return { chordName, bassNote }
+};
+
+export const getRootNoteAndChordTypeFromName = (chordName: string): {
+  chordType: string,
+  rootNote: string
+} => {
+  /* 
+    Split the chord into root note and chord type either at a space 
+    or immediately after the flat/sharp notation.
+    Otherwise just split after first character.
+  */
+  let splitIdx = 0;
+  if (chordName.includes(' ')) splitIdx = chordName.indexOf(' ');
+  if (chordName?.[1] === '#' || chordName?.[1] === 'b') splitIdx = 1;
+
+  const chordType = chordName?.substring(splitIdx + 1)?.trim();
+  const rootNote = chordName?.substring(0, splitIdx + 1)?.trim();
+
+  return { chordType, rootNote }
+};
+
+export const getChordNotesFromStructure = (rootNote: string, chordType: string): string[] => {
+  /*
+    Index and append each matching chord note to the array.
+  */
+  const rootNoteIdx: number = notes?.indexOf(rootNote);
+  const chordNotes: string[] = [];
+
+  const chordStructure = chordStructures[chordType];
+  chordStructure?.forEach((n: number) => {
+    chordNotes.push(notes[rootNoteIdx + n]);
+  });
+
+  return chordNotes;
+};
