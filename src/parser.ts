@@ -1,4 +1,4 @@
-import { Chord } from "./types"
+import { Chord } from "./types";
 import { swapFlatsWithSharps, chordStructures, notes } from "./util";
 
 export const getChordNotesByName = (chord: Chord): string[] => {
@@ -10,7 +10,7 @@ export const getChordNotesByName = (chord: Chord): string[] => {
 
   if (!chord.name || chord.name === '') return [];
 
-  const transformedChordName = swapFlatsWithSharps(chord.name)
+  const transformedChordName = swapFlatsWithSharps(chord.name);
 
   /* 
     Split the chord into root note and chord type either at a space 
@@ -32,11 +32,11 @@ export const getChordNotesByName = (chord: Chord): string[] => {
 
   const chordStructure = chordStructures[chordType];
   chordStructure?.forEach((n: number) => {
-    chordNotes.push(notes[rootNoteIdx + n])
+    chordNotes.push(notes[rootNoteIdx + n]);
   });
 
   if (chord.inversion) {
-    chordNotes = handleInversion(chordNotes, chord.inversion)
+    chordNotes = handleInversion(chordNotes, chord.inversion);
   }
 
   if (bassNote && notes.indexOf(bassNote) > -1) {
@@ -44,11 +44,11 @@ export const getChordNotesByName = (chord: Chord): string[] => {
   }
 
   return chordNotes;
-}
+};
 
 const handleInversion = (notes: string[], inversion: number): string[] => {
-  const notesBeforeInversion = notes.slice(0, inversion)
-  const notesAfterInversion = notes.slice(inversion)
+  const notesBeforeInversion = notes.slice(0, inversion);
+  const notesAfterInversion = notes.slice(inversion);
 
-  return [...notesAfterInversion, ...notesBeforeInversion]
-}
+  return [...notesAfterInversion, ...notesBeforeInversion];
+};

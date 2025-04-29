@@ -68,8 +68,8 @@ export const swapFlatsWithSharps = (str: string) => {
   if (str?.startsWith("Eb")) return str.replace('Eb', 'D#');
   if (str?.startsWith("Gb")) return str.replace('Gb', 'F#');
   if (str?.startsWith("Ab")) return str.replace('Ab', 'G#');
-  return str
-}
+  return str;
+};
 
 export const swapSharpsWithFlats = (str: string) => {
   if (str?.startsWith("A#")) return str.replace('A#', 'Bb');
@@ -77,5 +77,5 @@ export const swapSharpsWithFlats = (str: string) => {
   if (str?.startsWith("D#")) return str.replace('D#', 'Eb');
   if (str?.startsWith("F#")) return str.replace('F#', 'Gb');
   if (str?.startsWith("G#")) return str.replace('G#', 'Ab');
-  return str
-}
+  return str;
+};
