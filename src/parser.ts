@@ -8,6 +8,7 @@ import {
   getRootNoteAndChordTypeFromName,
   getChordNotesFromStructure,
   checkSubset,
+  removeDuplicateNotes,
 } from "./util";
 
 export const getChordNotesByName = (chord: ChordName): ChordNotes => {
@@ -46,7 +47,7 @@ export const getChordNameFromNotes = (notes: string[]): {
   exactMatches: ChordNotes[],
   possibleMatches: ChordNotes[],
 } => {
-  const normalizedNotes = notes.map((note: string) => swapFlatsWithSharps(note));
+  const normalizedNotes = removeDuplicateNotes(notes.map((note: string) => swapFlatsWithSharps(note)));
 
   const allPossibleChordTypes = normalizedNotes
     .map((rootNote: string) => {

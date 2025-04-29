@@ -96,6 +96,7 @@ test('test inversions', () => {
 test('test parsing name from notes', () => {
   expect(getChordNameFromNotes(['C', 'E', 'G']).exactMatches.length).toEqual(2);
   expect(getChordNameFromNotes(['G', 'C', 'E']).exactMatches.length).toEqual(2);
+  expect(getChordNameFromNotes(['G', 'G', 'C', 'E']).exactMatches.length).toEqual(2);
   expect(getChordNameFromNotes(['G', 'C', 'E', 'B']).exactMatches.length).toEqual(1);
   expect(getChordNameFromNotes(['G', 'Bb', 'Eb']).exactMatches.length).toEqual(2);
 });
