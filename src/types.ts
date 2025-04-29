@@ -1,13 +1,7 @@
-export interface ChordName {
+export interface Chord {
   name: string
+  notes?: string[]
   inversion?: number | null
-  root?: string
-}
-
-export interface ChordNotes {
-  notes: string[]
+  rootNote?: string
   bassNote?: string | null
-  name?: string
-  inversion?: number | null
-  rootNote?: string | null
-}
+};

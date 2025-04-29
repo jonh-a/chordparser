@@ -150,4 +150,4 @@ export const checkSubset = (parentArray: string[], subArray: string[]): boolean 
 
 export const removeDuplicateNotes = (notes: string[]): string[] => {
   return Array.from(new Set(notes));
-}
+};
