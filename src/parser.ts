@@ -28,28 +28,27 @@ export const getChordNotesByName = (chord: Chord): string[] => {
   if (!Object.keys(chordStructures).includes(chordType)) return [];
 
   const rootNoteIdx: number = notes?.indexOf(rootNote);
-  const chordNotes: string[] = [];
-
-  /* 
-    If a bass note is added and the first instance of the bass note
-    is after the first instance of the root note, then shift the chord
-    diagram up 12 half-steps.
-  */
-
-  let addIdx = 0;
-  if (
-    notes.indexOf(bassNote) > -1
-    && notes.indexOf(bassNote) > rootNoteIdx
-  ) addIdx = 12;
-
-  if (bassNote && notes.indexOf(bassNote) > -1) {
-    chordNotes.push(bassNote);
-  }
+  let chordNotes: string[] = [];
 
   const chordStructure = chordStructures[chordType];
   chordStructure?.forEach((n: number) => {
-    chordNotes.push(notes[rootNoteIdx + n + addIdx])
+    chordNotes.push(notes[rootNoteIdx + n])
   });
 
+  if (chord.inversion) {
+    chordNotes = handleInversion(chordNotes, chord.inversion)
+  }
+
+  if (bassNote && notes.indexOf(bassNote) > -1) {
+    chordNotes.unshift(bassNote);
+  }
+
   return chordNotes;
+}
+
+const handleInversion = (notes: string[], inversion: number): string[] => {
+  const notesBeforeInversion = notes.slice(0, inversion)
+  const notesAfterInversion = notes.slice(inversion)
+
+  return [...notesAfterInversion, ...notesBeforeInversion]
 }

@@ -1,5 +1,5 @@
 export interface Chord {
   name: string
-  inversion?: string | null
+  inversion?: number | null
   root?: string
 }
