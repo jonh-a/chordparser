@@ -7,11 +7,13 @@ import {
   seperateChordNameAndBassNote,
   getRootNoteAndChordTypeFromName,
   getNotesFromChordType,
-  checkSubset,
+  doesArrayContainSubset,
   removeDuplicateNotes,
 } from './util';
 
-export const getChordNotesByName = (chord: Chord): Chord => {
+export const getChordNotesByName = (chordInput: Chord | string): Chord => {
+  const chord: Chord = typeof chordInput === 'string' ? { name: chordInput } : chordInput;
+
   if (!chord.name || chord.name === '') return { notes: [], name: '' };
 
   const { chordName, bassNote } = seperateChordNameAndBassNote(chord.name);
@@ -61,7 +63,7 @@ export const getChordNameFromNotes = (notes: string[]): {
     .flat();
 
   const possibleMatches = allPossibleChordTypes
-    .filter((chordType: Chord) => checkSubset(chordType.notes, normalizedNotes));
+    .filter((chordType: Chord) => doesArrayContainSubset(chordType.notes, normalizedNotes));
 
   const exactMatches = possibleMatches
     .filter((chordType: Chord) => (

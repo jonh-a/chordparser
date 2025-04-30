@@ -6,6 +6,12 @@ export const notesAsFlats = 'A Bb B C Db D Eb E F Gb G Ab '.repeat(3).split(' ')
 export const chordTypes: {
   [index: string]: ChordType
 } = {
+  /*
+    Some chord types are duplicated in order to support multiple
+    references (ex. 'm' and 'min'). The less common notations
+    are marked as duplicate to be filtered out when necessary.
+  */
+
   // triads
   'maj': { structure: [0, 4, 7], key: 'major', duplicate: true },
   '(b5)': { structure: [0, 4, 6], key: 'neither' },
@@ -67,6 +73,11 @@ export const getNotesInScale = (
   rootNote: string,
   chordType: string,
 ): { notes: string[]; scale: 'flats' | 'sharps' } => {
+  /*
+    We should respect typical music theory rules and not provide inconsistent
+    sharps or flats where they don't belong. In other words, we should return
+    'Eb' in the C minor scale rather than 'D#'. This function handles that.
+  */
   const sharps = ['F#', 'C#', 'G#', 'D#', 'A#'];
   const flats = ['Gb', 'Db', 'Ab', 'Eb', 'Bb'];
 
@@ -108,21 +119,8 @@ export const getNotesInScale = (
 };
 
 export const changeAccidential = (note: string, changeTo: 'sharps' | 'flats') => {
-  const sharpReplacements = {
-    Bb: 'A#',
-    Db: 'C#',
-    Eb: 'D#',
-    Gb: 'F#',
-    Ab: 'G#',
-  };
-
-  const flatReplacements = {
-    'A#': 'Bb',
-    'C#': 'Db',
-    'D#': 'Eb',
-    'F#': 'Gb',
-    'G#': 'Ab',
-  };
+  const sharpReplacements = { Bb: 'A#', Db: 'C#', Eb: 'D#', Gb: 'F#', Ab: 'G#' };
+  const flatReplacements = { 'A#': 'Bb', 'C#': 'Db', 'D#': 'Eb', 'F#': 'Gb', 'G#': 'Ab' };
 
   const replacements = changeTo === 'sharps' 
     ? sharpReplacements 
@@ -194,10 +192,8 @@ export const getNotesFromChordType = (rootNote: string, chordType: string): stri
   });
 };
 
-export const checkSubset = (parentArray: string[], subArray: string[]): boolean => {
-  return subArray.every((e: string) => {
-    return parentArray.includes(e);
-  });
+export const doesArrayContainSubset = (parentArray: string[], subArray: string[]): boolean => {
+  return subArray.every((e: string) => parentArray.includes(e));
 };
 
 export const removeDuplicateNotes = (notes: string[]): string[] => {

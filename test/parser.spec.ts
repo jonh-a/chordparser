@@ -1,5 +1,21 @@
 import { getChordNotesByName, getChordNameFromNotes } from '../src/parser';
 
+test('test basic string input', () => {
+  expect(getChordNotesByName('Cmaj7')).toEqual({
+    notes: ['C', 'E', 'G', 'B'],
+    name: 'Cmaj7',
+    bassNote: null,
+    inversion: null,
+  });
+
+  expect(getChordNotesByName('Db7')).toEqual({
+    notes: ['Db', 'F', 'Ab', 'B'],
+    name: 'Db7',
+    bassNote: null,
+    inversion: null,
+  });
+});
+
 test('test major triads', () => {
   expect(getChordNotesByName({ name: 'C' })).toEqual({
     notes: ['C', 'E', 'G'],
