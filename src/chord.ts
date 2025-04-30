@@ -1,4 +1,5 @@
 import { ChordT } from './types';
+import { handleInversion, getNotesFromChordType } from './util';
 
 export class Chord {
   name: string;
@@ -7,6 +8,7 @@ export class Chord {
   bassNote: string | null;
   chordType: string;
   inversion: number | null;
+  private opts: ChordT;
 
   constructor(opts: ChordT) {
     this.name = opts.name;
@@ -15,5 +17,17 @@ export class Chord {
     this.bassNote = opts?.bassNote || null;
     this.chordType = opts?.chordType || null;
     this.inversion = opts?.inversion || null;
+    this.opts = opts;
+  }
+
+  public invert(inversion: number = 0) {
+    return new Chord({
+      ...this.opts,
+      inversion,
+      notes: handleInversion(
+        getNotesFromChordType(this.rootNote, this.chordType), 
+        inversion,
+      ),
+    });
   }
 }
