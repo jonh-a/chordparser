@@ -3,37 +3,6 @@ import { ChordType } from './types';
 export const notesAsSharps = 'A A# B C C# D D# E F F# G G# '.repeat(3).split(' ');
 export const notesAsFlats = 'A Bb B C Db D Eb E F Gb G Ab '.repeat(3).split(' ');
 
-export const getNotesInScale = (
-  rootNote: string, 
-  chordType: string,
-): { notes: string[], scale: 'flats' | 'sharps' } => {
-  if (['F#', 'C#', 'G#', 'D#', 'A#'].includes(rootNote)) {
-    return { notes: notesAsSharps, scale: 'sharps' };
-  }
-  if (['Gb', 'Db', 'Ab', 'Eb', 'Bb'].includes(rootNote)) {
-    return { notes: notesAsFlats, scale: 'flats' };
-  }
-  
-  if (['major', 'neither'].includes(chordTypes[chordType].key)) {
-    if (['G', 'D', 'A', 'E', 'B', 'F#', 'C#'].includes(rootNote)) {
-      return { notes: notesAsSharps, scale: 'sharps' };
-    }
-    if (['F', 'Bb', 'Eb', 'Ab', 'Db', 'Gb', 'Cb'].includes(rootNote)) {
-      return { notes: notesAsFlats, scale: 'flats' };
-    }
-  }
-  else if (chordTypes[chordType].key === 'minor') {
-    if (['E', 'B', 'F#', 'C#', 'G#', 'D#', 'A#'].includes(rootNote)) {
-      return { notes: notesAsSharps, scale: 'sharps' };
-    }
-    if (['D', 'G', 'C', 'F', 'Bb', 'Eb', 'Ab'].includes(rootNote)) {
-      return { notes: notesAsFlats, scale: 'flats' };
-    }
-  }
-
-  return { notes: notesAsSharps, scale: 'sharps' };
-};
-
 export const chordTypes: {
   [index: string]: ChordType
 } = {
@@ -94,22 +63,78 @@ export const chordTypes: {
   'min13': { structure: [0, 4, 7, 11, 14, 17, 21], key: 'minor', duplicate: true },
 };
 
-export const swapFlatsWithSharps = (str: string) => {
-  if (str?.startsWith('Bb')) return str.replace('Bb', 'A#');
-  if (str?.startsWith('Db')) return str.replace('Db', 'C#');
-  if (str?.startsWith('Eb')) return str.replace('Eb', 'D#');
-  if (str?.startsWith('Gb')) return str.replace('Gb', 'F#');
-  if (str?.startsWith('Ab')) return str.replace('Ab', 'G#');
-  return str;
+export const getNotesInScale = (
+  rootNote: string,
+  chordType: string,
+): { notes: string[]; scale: 'flats' | 'sharps' } => {
+  const sharps = ['F#', 'C#', 'G#', 'D#', 'A#'];
+  const flats = ['Gb', 'Db', 'Ab', 'Eb', 'Bb'];
+
+  const majorSharpKeys = ['G', 'D', 'A', 'E', 'B', 'F#', 'C#'];
+  const majorFlatKeys = ['F', 'Bb', 'Eb', 'Ab', 'Db', 'Gb', 'Cb'];
+
+  const minorSharpKeys = ['E', 'B', 'F#', 'C#', 'G#', 'D#', 'A#'];
+  const minorFlatKeys = ['D', 'G', 'C', 'F', 'Bb', 'Eb', 'Ab'];
+
+  const chordKey = chordTypes[chordType]?.key;
+
+  if (sharps.includes(rootNote)) {
+    return { notes: notesAsSharps, scale: 'sharps' };
+  }
+
+  if (flats.includes(rootNote)) {
+    return { notes: notesAsFlats, scale: 'flats' };
+  }
+
+  if (['major', 'neither'].includes(chordKey)) {
+    if (majorSharpKeys.includes(rootNote)) {
+      return { notes: notesAsSharps, scale: 'sharps' };
+    }
+    if (majorFlatKeys.includes(rootNote)) {
+      return { notes: notesAsFlats, scale: 'flats' };
+    }
+  }
+
+  if (chordKey === 'minor') {
+    if (minorSharpKeys.includes(rootNote)) {
+      return { notes: notesAsSharps, scale: 'sharps' };
+    }
+    if (minorFlatKeys.includes(rootNote)) {
+      return { notes: notesAsFlats, scale: 'flats' };
+    }
+  }
+
+  return { notes: notesAsSharps, scale: 'sharps' };
 };
 
-export const swapSharpsWithFlats = (str: string) => {
-  if (str?.startsWith('A#')) return str.replace('A#', 'Bb');
-  if (str?.startsWith('C#')) return str.replace('C#', 'Db');
-  if (str?.startsWith('D#')) return str.replace('D#', 'Eb');
-  if (str?.startsWith('F#')) return str.replace('F#', 'Gb');
-  if (str?.startsWith('G#')) return str.replace('G#', 'Ab');
-  return str;
+export const changeAccidential = (note: string, changeTo: 'sharps' | 'flats') => {
+  const sharpReplacements = {
+    Bb: 'A#',
+    Db: 'C#',
+    Eb: 'D#',
+    Gb: 'F#',
+    Ab: 'G#',
+  };
+
+  const flatReplacements = {
+    'A#': 'Bb',
+    'C#': 'Db',
+    'D#': 'Eb',
+    'F#': 'Gb',
+    'G#': 'Ab',
+  };
+
+  const replacements = changeTo === 'sharps' 
+    ? sharpReplacements 
+    : flatReplacements;
+  
+  for (const [original, replacement] of Object.entries(replacements)) {
+    if (note?.startsWith(original)) {
+      return note?.replace(original, replacement);
+    }
+  }
+
+  return note;
 };
 
 export const handleInversion = (notes: string[], inversion: number): string[] => {

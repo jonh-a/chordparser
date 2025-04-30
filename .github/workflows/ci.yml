@@ -2,7 +2,7 @@ name: test and build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
@@ -11,12 +11,12 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-        
+
       - name: install dependencies
         run: npm ci
 
       - name: lint
-        run: npx eslint .
+        run: npm run lint
 
       - name: run jest tests
         run: npm run test

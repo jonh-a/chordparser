@@ -1,6 +1,6 @@
 import { Chord } from './types';
 import {
-  swapFlatsWithSharps,
+  changeAccidential,
   chordTypes,
   getNotesInScale,
   handleInversion,
@@ -9,7 +9,6 @@ import {
   getNotesFromChordType,
   checkSubset,
   removeDuplicateNotes,
-  swapSharpsWithFlats,
 } from './util';
 
 export const getChordNotesByName = (chord: Chord): Chord => {
@@ -19,9 +18,7 @@ export const getChordNotesByName = (chord: Chord): Chord => {
   const { rootNote, chordType } = getRootNoteAndChordTypeFromName(chordName);
 
   const { notes, scale } = getNotesInScale(rootNote, chordType);
-  const transformedBassNote = scale === 'flats' 
-    ? swapSharpsWithFlats(bassNote) 
-    : swapFlatsWithSharps(bassNote);
+  const transformedBassNote = changeAccidential(bassNote, scale);
 
   if (!Object.keys(chordTypes).includes(chordType)) return { notes: [], name: chord.name };
 
@@ -46,7 +43,7 @@ export const getChordNameFromNotes = (notes: string[]): {
   possibleMatches: Chord[],
 } => {
   const normalizedNotes = removeDuplicateNotes(notes.map(
-    (note: string) => swapFlatsWithSharps(note),
+    (note: string) => changeAccidential(note, 'sharps'),
   ));
 
   const nonDuplicateChordTypes = Object.keys(chordTypes)
