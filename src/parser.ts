@@ -82,7 +82,7 @@ export const getChordNameFromNotes = (notes: string[]): {
   const exactMatches = possibleMatches
     .filter((chord: Chord) => (
       JSON.stringify([...chord.notes].sort()) === JSON.stringify([...normalizedNotes].sort())),
-    )
+    );
 
   return { exactMatches, possibleMatches };
 };

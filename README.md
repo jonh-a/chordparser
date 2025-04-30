@@ -35,10 +35,12 @@ Chord {
 getChordNotesByName("D#7sus4");
 
 /*
-{
-  notes: [ 'G', 'G', 'B', 'C', 'E' ],
-  bassNote: 'G',
+Chord {
   name: 'Cmaj7',
+  notes: [ 'G', 'G', 'B', 'C', 'E' ],
+  rootNote: 'C',
+  bassNote: 'G',
+  chordType: 'maj7',
   inversion: 2
 }
 */
@@ -53,10 +55,13 @@ possible matches given a set of notes.
 ```typescript
 /*
 [
-  {
-     name: 'Cmaj7',
-     notes: [ 'C', 'E', 'G', 'B' ],
-     rootNote: 'C'
+  Chord {
+    name: 'Cmaj7',
+    notes: [ 'C', 'E', 'G', 'B' ],
+    rootNote: 'C',
+    bassNote: null,
+    chordType: 'maj7',
+    inversion: null
   }
 ]
 */
