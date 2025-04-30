@@ -39,12 +39,15 @@ export class Chord {
       this.inversion,
     );
     if (transposedBass) transposedNotes.unshift(transposedBass);
+    
+    const transposedName = `${transposedRoot}${this.chordType}`
+      + `${transposedBass ? '/' + transposedBass : ''}`;
 
     return new Chord({
       ...this.opts,
       rootNote: transposedRoot,
       notes: transposedNotes,
-      name: `${transposedRoot}${this.chordType}`,
+      name: transposedName,
       bassNote: transposedBass,
     });
   } 

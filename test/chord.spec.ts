@@ -64,7 +64,7 @@ test('test chord transpositions', () => {
   }).transpose(2))
   .toEqual(new Chord({
     notes: ['A', 'D', 'F#', 'A', 'C#'],
-    name: 'Dmaj7',
+    name: 'Dmaj7/A',
     bassNote: 'A',
     inversion: null,
     chordType: 'maj7',
@@ -81,7 +81,7 @@ test('test chord transpositions', () => {
   }).transpose(2))
   .toEqual(new Chord({
     notes: ['A', 'F#', 'A', 'C#', 'D'],
-    name: 'Dmaj7',
+    name: 'Dmaj7/A',
     bassNote: 'A',
     inversion: 1,
     chordType: 'maj7',
@@ -98,7 +98,7 @@ test('test chord transpositions', () => {
   }).transpose(2).transpose(2))
   .toEqual(new Chord({
     notes: ['B', 'G#', 'B', 'D#', 'E'],
-    name: 'Emaj7',
+    name: 'Emaj7/B',
     bassNote: 'B',
     inversion: 1,
     chordType: 'maj7',
