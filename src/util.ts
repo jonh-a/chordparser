@@ -1,4 +1,4 @@
-import { ChordType } from "./types";
+import { ChordType } from './types';
 
 export const notesAsSharps = 'A A# B C C# D D# E F F# G G# '.repeat(3).split(' ');
 export const notesAsFlats = 'A Bb B C Db D Eb E F Gb G Ab '.repeat(3).split(' ');

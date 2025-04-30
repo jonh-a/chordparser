@@ -1,4 +1,4 @@
-import { Chord, ChordType } from './types';
+import { Chord } from './types';
 import {
   swapFlatsWithSharps,
   chordTypes,
@@ -50,7 +50,7 @@ export const getChordNameFromNotes = (notes: string[]): {
   ));
 
   const nonDuplicateChordTypes = Object.keys(chordTypes)
-    .filter((chordKey: string) => !chordTypes[chordKey].duplicate)
+    .filter((chordKey: string) => !chordTypes[chordKey].duplicate);
 
   const allPossibleChordTypes = normalizedNotes
     .map((rootNote: string) => (
