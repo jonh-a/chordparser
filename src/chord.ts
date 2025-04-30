@@ -1,5 +1,5 @@
 import { ChordT } from './types';
-import { handleInversion, getNotesFromChordType } from './util';
+import { handleInversion, getNotesFromChordType, transposeRootNote } from './util';
 
 export class Chord {
   name: string;
@@ -30,4 +30,22 @@ export class Chord {
       ),
     });
   }
+
+  public transpose(semitones: number = 0) {
+    const transposedRoot = transposeRootNote(this.rootNote, semitones);
+    const transposedBass = this.bassNote ? transposeRootNote(this.bassNote, semitones) : null;
+    const transposedNotes = handleInversion(
+      getNotesFromChordType(transposedRoot, this.chordType), 
+      this.inversion,
+    );
+    if (transposedBass) transposedNotes.unshift(transposedBass);
+
+    return new Chord({
+      ...this.opts,
+      rootNote: transposedRoot,
+      notes: transposedNotes,
+      name: `${transposedRoot}${this.chordType}`,
+      bassNote: transposedBass,
+    });
+  } 
 }

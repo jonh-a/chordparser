@@ -199,3 +199,9 @@ export const doesArrayContainSubset = (parentArray: string[], subArray: string[]
 export const removeDuplicateNotes = (notes: string[]): string[] => {
   return Array.from(new Set(notes));
 };
+
+export const transposeRootNote = (rootNote: string, semitones: number): string => {
+  const originalIndex =  notesAsSharps.indexOf(changeAccidential(rootNote, 'sharps'));
+  const newIndex = originalIndex + semitones;
+  return notesAsSharps[newIndex];
+};

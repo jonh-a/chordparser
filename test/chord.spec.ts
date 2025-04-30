@@ -1,6 +1,6 @@
-import { Chord } from "../src/chord";
+import { Chord } from '../src/chord';
 
-test('chord inversions', () => {
+test('test chord inversions', () => {
   expect(new Chord({
     notes: ['C', 'E', 'G', 'B'],
     name: 'Cmaj7',
@@ -34,4 +34,74 @@ test('chord inversions', () => {
     chordType: 'maj7',
     rootNote: 'C',
   }));
-})
+});
+
+test('test chord transpositions', () => {
+  expect(new Chord({
+    notes: ['C', 'E', 'G', 'B'],
+    name: 'Cmaj7',
+    bassNote: null,
+    inversion: null,
+    chordType: 'maj7',
+    rootNote: 'C',
+  }).transpose(2))
+  .toEqual(new Chord({
+    notes: ['D', 'F#', 'A', 'C#'],
+    name: 'Dmaj7',
+    bassNote: null,
+    inversion: null,
+    chordType: 'maj7',
+    rootNote: 'D',
+  }));
+
+  expect(new Chord({
+    notes: ['G', 'C', 'E', 'G', 'B'],
+    name: 'Cmaj7/G',
+    bassNote: 'G',
+    inversion: null,
+    chordType: 'maj7',
+    rootNote: 'C',
+  }).transpose(2))
+  .toEqual(new Chord({
+    notes: ['A', 'D', 'F#', 'A', 'C#'],
+    name: 'Dmaj7',
+    bassNote: 'A',
+    inversion: null,
+    chordType: 'maj7',
+    rootNote: 'D',
+  }));
+
+  expect(new Chord({
+    notes: ['G', 'E', 'G', 'B', 'C'],
+    name: 'Cmaj7/G',
+    bassNote: 'G',
+    inversion: 1,
+    chordType: 'maj7',
+    rootNote: 'C',
+  }).transpose(2))
+  .toEqual(new Chord({
+    notes: ['A', 'F#', 'A', 'C#', 'D'],
+    name: 'Dmaj7',
+    bassNote: 'A',
+    inversion: 1,
+    chordType: 'maj7',
+    rootNote: 'D',
+  }));
+
+  expect(new Chord({
+    notes: ['G', 'E', 'G', 'B', 'C'],
+    name: 'Cmaj7/G',
+    bassNote: 'G',
+    inversion: 1,
+    chordType: 'maj7',
+    rootNote: 'C',
+  }).transpose(2).transpose(2))
+  .toEqual(new Chord({
+    notes: ['B', 'G#', 'B', 'D#', 'E'],
+    name: 'Emaj7',
+    bassNote: 'B',
+    inversion: 1,
+    chordType: 'maj7',
+    rootNote: 'E',
+  }));
+});
