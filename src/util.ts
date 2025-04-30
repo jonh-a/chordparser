@@ -1,14 +1,7 @@
-export const notesAsSharps = [
-  'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#',
-  'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#',
-  'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#',
-];
+import { ChordType } from "./types";
 
-export const notesAsFlats = [
-  'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab',
-  'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab',
-  'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab',
-];
+export const notesAsSharps = 'A A# B C C# D D# E F F# G G# '.repeat(3).split(' ');
+export const notesAsFlats = 'A Bb B C Db D Eb E F Gb G Ab '.repeat(3).split(' ');
 
 export const getNotesInScale = (
   rootNote: string, 
@@ -42,63 +35,63 @@ export const getNotesInScale = (
 };
 
 export const chordTypes: {
-  [index: string]: { structure: number[]; key: 'major' | 'minor' | 'neither' }
+  [index: string]: ChordType
 } = {
   // triads
-  'maj': { structure: [0, 4, 7], key: 'major' },
+  'maj': { structure: [0, 4, 7], key: 'major', duplicate: true },
   '(b5)': { structure: [0, 4, 6], key: 'neither' },
   '': { structure: [0, 4, 7], key: 'major' },
-  'min': { structure: [0, 3, 7], key: 'minor' },
+  'min': { structure: [0, 3, 7], key: 'minor', duplicate: true },
   'm': { structure: [0, 3, 7], key: 'minor' },
   '5': { structure: [0, 7], key: 'neither' },
   'sus2': { structure: [0, 2, 7], key: 'major' },
   'sus4': { structure: [0, 5, 7], key: 'major' },
   'dim': { structure: [0, 3, 6], key: 'minor' },
-  'aug': { structure: [0, 4, 8], key: 'neither' },
-  '+': { structure: [0, 4, 8], key: 'neither' },
+  'aug': { structure: [0, 4, 8], key: 'major' },
+  '+': { structure: [0, 4, 8], key: 'major', duplicate: true },
 
   // tetrads
   '6': { structure: [0, 4, 7, 9], key: 'major' },
   'm6': { structure: [0, 3, 7, 9], key: 'minor' },
-  'min6': { structure: [0, 3, 7, 9], key: 'minor' },
+  'min6': { structure: [0, 3, 7, 9], key: 'minor', duplicate: true },
   '7': { structure: [0, 4, 7, 10], key: 'major' },
   '7sus4': { structure: [0, 5, 7, 10], key: 'major' },
   'maj7': { structure: [0, 4, 7, 11], key: 'major' },
-  'min7': { structure: [0, 3, 7, 10], key: 'minor' },
+  'min7': { structure: [0, 3, 7, 10], key: 'minor', duplicate: true },
   'm7': { structure: [0, 3, 7, 10], key: 'minor' },
   'm7b5': { structure: [0, 3, 6, 10], key: 'minor' },
-  'min7b5': { structure: [0, 3, 6, 10], key: 'minor' },
+  'min7b5': { structure: [0, 3, 6, 10], key: 'minor', duplicate: true },
   'dim7': { structure: [0, 3, 6, 9], key: 'minor' },
   'add9': { structure: [0, 4, 7, 14], key: 'major' },
-  'addb9': { structure: [0, 4, 7, 13], key: 'neither' },
-  '(add9)': { structure: [0, 4, 7, 14], key: 'major' },
-  '(addb9)': { structure: [0, 4, 7, 13], key: 'neither' },
+  'addb9': { structure: [0, 4, 7, 13], key: 'major' },
+  '(add9)': { structure: [0, 4, 7, 14], key: 'major', duplicate: true },
+  '(addb9)': { structure: [0, 4, 7, 13], key: 'major', duplicate: true },
   'madd9': { structure: [0, 3, 7, 14], key: 'minor' },
-  'm(add9)': { structure: [0, 3, 7, 14], key: 'minor' },
+  'm(add9)': { structure: [0, 3, 7, 14], key: 'minor', duplicate: true },
   'mmaj7': { structure: [0, 3, 7, 11], key: 'minor' },
 
   // extended chords
   '6/9': { structure: [0, 4, 7, 9, 14], key: 'major' },
   'm6/9': { structure: [0, 3, 7, 9, 14], key: 'minor' },
-  'min6/9': { structure: [0, 3, 7, 9, 14], key: 'minor' },
+  'min6/9': { structure: [0, 3, 7, 9, 14], key: 'minor', duplicate: true },
 
   '9': { structure: [0, 4, 7, 10, 14], key: 'major' },
   '9sus4': { structure: [0, 5, 7, 10, 14], key: 'major' },
   'maj9': { structure: [0, 4, 7, 11, 14], key: 'major' },
-  'min9': { structure: [0, 3, 7, 10, 14], key: 'minor' },
+  'min9': { structure: [0, 3, 7, 10, 14], key: 'minor', duplicate: true },
   'm9': { structure: [0, 3, 7, 10, 14], key: 'minor' },
 
   '11': { structure: [0, 4, 7, 10, 14, 17], key: 'major' },
   'maj11': { structure: [0, 4, 7, 11, 14, 17], key: 'major' },
   'm11': { structure: [0, 3, 7, 11, 14, 17], key: 'minor' },
-  'min11': { structure: [0, 4, 7, 11, 14, 17], key: 'neither' },
+  'min11': { structure: [0, 4, 7, 11, 14, 17], key: 'minor', duplicate: true },
   'maj7#11': { structure: [0, 4, 7, 11, 18], key: 'major' },
 
   '13': { structure: [0, 4, 7, 10, 14, 17, 21], key: 'major' },
   '13sus4': { structure: [0, 5, 7, 10, 14, 17, 21], key: 'major' },
   'maj13': { structure: [0, 4, 7, 11, 14, 17, 21], key: 'major' },
   'm13': { structure: [0, 3, 7, 11, 14, 17, 21], key: 'minor' },
-  'min13': { structure: [0, 4, 7, 11, 14, 17, 21], key: 'neither' },
+  'min13': { structure: [0, 4, 7, 11, 14, 17, 21], key: 'minor', duplicate: true },
 };
 
 export const swapFlatsWithSharps = (str: string) => {
