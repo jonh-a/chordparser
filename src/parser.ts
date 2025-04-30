@@ -1,4 +1,5 @@
-import { Chord } from './types';
+import { ChordT } from './types';
+import { Chord } from './chord';
 import {
   changeAccidential,
   chordTypes,
@@ -11,8 +12,8 @@ import {
   removeDuplicateNotes,
 } from './util';
 
-export const getChordNotesByName = (chordInput: Chord | string): Chord => {
-  const chord: Chord = typeof chordInput === 'string' ? { name: chordInput } : chordInput;
+export const getChordNotesByName = (chordInput: ChordT | string): ChordT => {
+  const chord: ChordT = typeof chordInput === 'string' ? { name: chordInput } : chordInput;
 
   if (!chord.name || chord.name === '') return { notes: [], name: '' };
 
@@ -32,17 +33,19 @@ export const getChordNotesByName = (chordInput: Chord | string): Chord => {
     chordNotes.unshift(transformedBassNote);
   }
 
-  return {
+  return new Chord({
+    name: chordName,
     notes: chordNotes,
     bassNote: transformedBassNote ?? null,
-    name: chordName,
     inversion: chord.inversion ?? null,
-  };
+    rootNote,
+    chordType,
+  });
 };
 
 export const getChordNameFromNotes = (notes: string[]): {
-  exactMatches: Chord[],
-  possibleMatches: Chord[],
+  exactMatches: ChordT[],
+  possibleMatches: ChordT[],
 } => {
   const normalizedNotes = removeDuplicateNotes(notes.map(
     (note: string) => changeAccidential(note, 'sharps'),
@@ -63,10 +66,10 @@ export const getChordNameFromNotes = (notes: string[]): {
     .flat();
 
   const possibleMatches = allPossibleChordTypes
-    .filter((chordType: Chord) => doesArrayContainSubset(chordType.notes, normalizedNotes));
+    .filter((chordType: ChordT) => doesArrayContainSubset(chordType.notes, normalizedNotes));
 
   const exactMatches = possibleMatches
-    .filter((chordType: Chord) => (
+    .filter((chordType: ChordT) => (
       JSON.stringify([...chordType.notes].sort()) === JSON.stringify([...normalizedNotes].sort())),
     );
 

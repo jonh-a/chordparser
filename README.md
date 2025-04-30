@@ -4,30 +4,35 @@ A small chord parsing library, as the name implies.
 
 ## Getting chord notes from a chord name
 
-Use the `getChordNotesByName` function to get an object containing the chord notes and bass note (if it's a slash chord).
+Use the `getChordNotesByName` function to get an object containing the chord
+notes and bass note (if it's a slash chord).
 
 ```typescript
-import { getChordNotesByName } from 'chordparser';
+import { getChordNotesByName } from "chordparser";
 
 /*
-{
-  notes: [ 'G', 'C', 'E', 'G', 'B' ],
-  bassNote: 'G',
+Chord {
   name: 'Cmaj7',
+  notes: [ 'G', 'C', 'E', 'G', 'B' ],
+  rootNote: 'C',
+  bassNote: 'G',
+  chordType: 'maj7',
   inversion: null
 }
 */
-getChordNotesByName({ name: 'Cmaj7/G' })
+getChordNotesByName("Cmaj7/G");
 
 /*
-{
-  notes: [ 'D#', 'G#', 'A#', 'C#' ],
-  bassNote: null,
+Chord {
   name: 'D#7sus4',
+  notes: [ 'D#', 'G#', 'A#', 'C#' ],
+  rootNote: 'D#',
+  bassNote: null,
+  chordType: '7sus4',
   inversion: null
 }
 */
-getChordNotesByName({ name: 'D#7sus4' })
+getChordNotesByName("D#7sus4");
 
 /*
 {
@@ -37,22 +42,23 @@ getChordNotesByName({ name: 'D#7sus4' })
   inversion: 2
 }
 */
-getChordNotesByName({ name: 'Cmaj7/G', inversion: 2 }) 
+getChordNotesByName({ name: "Cmaj7/G", inversion: 2 });
 ```
 
 ## Getting a chord name from a set of notes
-Use the `getChordNameFromNotes` function to get an object containing exact and possible matches given a set of notes. 
+
+Use the `getChordNameFromNotes` function to get an object containing exact and
+possible matches given a set of notes.
 
 ```typescript
-
 /*
-[ 
-  { 
-     name: 'Cmaj7', 
-     notes: [ 'C', 'E', 'G', 'B' ], 
-     rootNote: 'C' 
+[
+  {
+     name: 'Cmaj7',
+     notes: [ 'C', 'E', 'G', 'B' ],
+     rootNote: 'C'
   }
 ]
 */
-getChordNameFromNotes(['C', 'E', 'G', 'B']).exactMatches
+getChordNameFromNotes(["C", "E", "G", "B"]).exactMatches;
 ```
