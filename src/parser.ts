@@ -60,18 +60,29 @@ export const getChordNameFromNotes = (notes: string[]): {
         .map((chordType: string) => ({
           name: `${rootNote}${chordType}`,
           notes: getNotesFromChordType(rootNote, chordType),
+          chordType,
           rootNote,
         }))
     ))
     .flat();
 
   const possibleMatches = allPossibleChordTypes
-    .filter((chordType: ChordT) => doesArrayContainSubset(chordType.notes, normalizedNotes));
+    .filter((chordType: ChordT) => doesArrayContainSubset(chordType.notes, normalizedNotes))
+    .map((chord: ChordT) => (
+      new Chord({
+        name: chord.name,
+        notes: chord.notes,
+        rootNote: chord.rootNote,
+        bassNote: chord?.bassNote ?? null,
+        chordType: chord.chordType,
+        inversion: chord?.inversion ?? null,
+      })
+    ));
 
   const exactMatches = possibleMatches
-    .filter((chordType: ChordT) => (
-      JSON.stringify([...chordType.notes].sort()) === JSON.stringify([...normalizedNotes].sort())),
-    );
+    .filter((chord: Chord) => (
+      JSON.stringify([...chord.notes].sort()) === JSON.stringify([...normalizedNotes].sort())),
+    )
 
   return { exactMatches, possibleMatches };
 };
