@@ -8,11 +8,11 @@ import {
   getRootNoteAndChordTypeFromName,
   getNotesFromChordType,
   doesArrayContainSubset,
-  removeDuplicateNotes,
   generateAllPossibleChords,
   constructChord,
   notesAsSharps,
   notateSlashChord,
+  removeDuplicateAndNullNotes,
 } from './util';
 
 export const getChordByName = (chordInput: ChordT | string): ChordT => {
@@ -46,7 +46,7 @@ export const getChordByNotes = (notes: string[]): {
   exactMatches: ChordT[],
   possibleMatches: ChordT[],
 } => {
-  const normalizedNotes = removeDuplicateNotes(notes.map(
+  const normalizedNotes = removeDuplicateAndNullNotes(notes.map(
     (note: string) => changeAccidential(note, 'sharps'),
   ));
 
@@ -80,7 +80,7 @@ export const getChordByNotes = (notes: string[]): {
       )
       .map((chord: ChordT) => ({ 
         ...chord, 
-        bassNote, 
+        bassNote,
         notes: normalizedNotes,
         name: notateSlashChord(bassNote, chord.name),
       }));
@@ -104,7 +104,7 @@ export const getChordByGuitarVoicing = (chordInput: GuitarChord | number[]) => {
   const notes = chord.notes.map((fret: number, index: number) => {
     const stringTuning = normalizedTuning[index];
     const startingIndex = notesAsSharps.indexOf(stringTuning);
-    const note = notesAsSharps[startingIndex + fret];
+    const note = fret !== null ? notesAsSharps[startingIndex + fret] : null;
     return note;
   });
 

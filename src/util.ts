@@ -197,8 +197,8 @@ export const doesArrayContainSubset = (parentArray: string[], subArray: string[]
   return subArray.every((e: string) => parentArray.includes(e));
 };
 
-export const removeDuplicateNotes = (notes: string[]): string[] => {
-  return Array.from(new Set(notes));
+export const removeDuplicateAndNullNotes = (notes: string[]): string[] => {
+  return Array.from(new Set(notes)).filter((n: string) => n !== null);
 };
 
 export const transposeRootNote = (rootNote: string, semitones: number): string => {

@@ -195,6 +195,16 @@ test('test parsing name from notes', () => {
       bassNote: null,
     }),
   ]);
+  expect(getChordByNotes(['G', 'D', 'F#', 'A']).exactMatches).toEqual([
+    new Chord({
+      notes: [ 'G', 'D', 'F#', 'A'],
+      name: 'D/G',
+      chordType: '',
+      rootNote: 'D',
+      inversion: null,
+      bassNote: 'G',
+    }),
+  ]);
   expect(getChordByNotes(['G', 'G', 'C', 'E']).exactMatches).toEqual([
     new Chord({
       notes: ['C', 'E', 'G'],

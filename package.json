@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint .",
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "lt": "npm run lint && npm run test"
   },
   "author": "",
   "license": "ISC",

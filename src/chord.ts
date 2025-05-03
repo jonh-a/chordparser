@@ -15,9 +15,14 @@ export class Chord {
     this.notes = opts.notes;
     this.rootNote = opts.rootNote;
     this.bassNote = opts?.bassNote || null;
-    this.chordType = opts?.chordType || null;
+    this.chordType = opts?.chordType;
     this.inversion = opts?.inversion || null;
-    this.opts = opts;
+    Object.defineProperty(this, 'opts', {
+      value: opts,
+      writable: true,
+      configurable: true,
+      enumerable: false,
+    });
   }
 
   public invert(inversion: number = 0) {
