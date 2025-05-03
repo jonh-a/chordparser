@@ -240,3 +240,21 @@ export const notateSlashChord = (bassNote: string | null, chord: string): string
     ? `${chord}/${bassNote}`
     : chord;
 };
+
+export const suffixBassNoteIfNotRootNote = (
+  bassNote: string,
+  rootNote: string,
+  notes: string[],
+  name: string,
+): {
+  name: string,
+  notes: string[],
+} => {
+  if (bassNote != rootNote) {
+    return {
+      name: notateSlashChord(bassNote, name),
+      notes: [bassNote, ...notes],
+    };
+  }
+  return {name, notes };
+};

@@ -11,8 +11,8 @@ import {
   generateAllPossibleChords,
   constructChord,
   notesAsSharps,
-  notateSlashChord,
   removeDuplicateAndNullNotes,
+  suffixBassNoteIfNotRootNote,
 } from './util';
 
 export const getChordByName = (chordInput: ChordT | string): ChordT => {
@@ -58,7 +58,21 @@ export const getChordByNotes = (notes: string[]): {
   let exactMatches = possibleMatches
     .filter((chord: ChordT) => (
       JSON.stringify([...chord.notes].sort()) === JSON.stringify([...normalizedNotes].sort())),
-    );
+    )
+    .map((chord: ChordT) => {
+      const { name, notes } = suffixBassNoteIfNotRootNote(
+        normalizedNotes[0], 
+        chord.rootNote, 
+        chord.notes, 
+        chord.name,
+      );
+      return { 
+        ...chord, 
+        name, 
+        notes: removeDuplicateAndNullNotes(notes), 
+        bassNote: normalizedNotes[0] !== chord.rootNote ? normalizedNotes[0] : null, 
+      };
+    });
 
   /*
     If no exact matches are found, strip the bass note and treat the notes array 
@@ -78,12 +92,20 @@ export const getChordByNotes = (notes: string[]): {
       .filter((chord: ChordT) => (
         JSON.stringify([...chord.notes].sort()) === JSON.stringify([...chordNotes].sort())),
       )
-      .map((chord: ChordT) => ({ 
-        ...chord, 
-        bassNote,
-        notes: normalizedNotes,
-        name: notateSlashChord(bassNote, chord.name),
-      }));
+      .map((chord: ChordT) => { 
+        const { name, notes } = suffixBassNoteIfNotRootNote(
+          normalizedNotes[0], 
+          chord.rootNote, 
+          chord.notes, 
+          chord.name,
+        );
+        return { 
+          ...chord, 
+          name, 
+          notes: removeDuplicateAndNullNotes(notes), 
+          bassNote: bassNote !== chord.rootNote ? bassNote : null,
+        };
+      });
   };
   
   const possibleChords = possibleMatches.map((chord: ChordT) => constructChord(chord));
@@ -92,7 +114,7 @@ export const getChordByNotes = (notes: string[]): {
   return { exactMatches: exactChords, possibleMatches: possibleChords };
 };
 
-export const getChordByGuitarVoicing = (chordInput: GuitarChord | number[]) => {
+export const getChordByGuitarVoicing = (chordInput: GuitarChord | (number | null)[]) => {
   const chord: GuitarChord = Array.isArray(chordInput) 
     ? { tuning: 'EADGBE', notes: chordInput } 
     : chordInput;

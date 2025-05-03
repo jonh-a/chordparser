@@ -187,12 +187,12 @@ test('test parsing name from notes', () => {
   ]);
   expect(getChordByNotes(['G', 'C', 'E']).exactMatches).toEqual([
     new Chord({
-      notes: ['C', 'E', 'G'],
-      name: 'C',
+      notes: ['G', 'C', 'E'],
+      name: 'C/G',
       chordType: '',
       rootNote: 'C',
       inversion: null,
-      bassNote: null,
+      bassNote: 'G',
     }),
   ]);
   expect(getChordByNotes(['G', 'D', 'F#', 'A']).exactMatches).toEqual([
@@ -207,32 +207,32 @@ test('test parsing name from notes', () => {
   ]);
   expect(getChordByNotes(['G', 'G', 'C', 'E']).exactMatches).toEqual([
     new Chord({
-      notes: ['C', 'E', 'G'],
-      name: 'C',
+      notes: ['G', 'C', 'E'],
+      name: 'C/G',
       chordType: '',
       rootNote: 'C',
       inversion: null,
-      bassNote: null,
+      bassNote: 'G',
     }),
   ]);
   expect(getChordByNotes(['G', 'B', 'C', 'E']).exactMatches).toEqual([
     new Chord({
-      notes: ['C', 'E', 'G', 'B'],
-      name: 'Cmaj7',
+      notes: ['G', 'C', 'E', 'B'],
+      name: 'Cmaj7/G',
       chordType: 'maj7',
       rootNote: 'C',
       inversion: null,
-      bassNote: null,
+      bassNote: 'G',
     }),
   ]);
   expect(getChordByNotes(['G', 'Bb', 'Eb', 'F']).exactMatches).toEqual([
     new Chord({
-      notes: ['D#', 'G', 'A#', 'F'],
-      name: 'D#add9',
+      notes: ['G', 'D#', 'A#', 'F'],
+      name: 'D#add9/G',
       chordType: 'add9',
       rootNote: 'D#',
       inversion: null,
-      bassNote: null,
+      bassNote: 'G',
     }),
   ]);;
   expect(getChordByNotes(['A#', 'D', 'F#', 'A']).exactMatches).toEqual([
@@ -289,7 +289,7 @@ test('test guitar chord parsing', () => {
     notes: [3, 0, 0, 2, 1, 2],
   }).exactMatches).toEqual([
     new Chord({
-      notes: ['G', 'A', 'D', 'C', 'F#'],
+      notes: ['G', 'D', 'F#', 'A', 'C'],
       name: 'D7/G',
       chordType: '7',
       rootNote: 'D',
@@ -300,12 +300,23 @@ test('test guitar chord parsing', () => {
   expect(getChordByGuitarVoicing([1, 2, 2, 0, 0, 0]).exactMatches)
   .toEqual([
     new Chord({
-      notes: ['F', 'B', 'E', 'G'],
+      notes: ['F', 'E', 'G', 'B'],
       name: 'Em/F',
       chordType: 'm',
       rootNote: 'E',
       inversion: null,
       bassNote: 'F',
+    }),
+  ]);
+  expect(getChordByGuitarVoicing([null, null, 0, 2, null, null]).exactMatches)
+  .toEqual([
+    new Chord({
+      notes: ['D', 'A'],
+      name: 'D5',
+      chordType: '5',
+      rootNote: 'D',
+      inversion: null,
+      bassNote: null,
     }),
   ]);
 });
