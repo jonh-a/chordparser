@@ -1,4 +1,4 @@
-import { getChordByName, getChordByNotes } from '../src/parser';
+import { getChordByGuitarVoicing, getChordByName, getChordByNotes } from '../src/parser';
 import { Chord } from '../src/chord';
 
 test('test basic string input', () => {
@@ -245,4 +245,46 @@ test('test parsing name from notes', () => {
       bassNote: 'E',
     }),
   ]);;
+});
+
+test('test guitar chord parsing', () => {
+  expect(getChordByGuitarVoicing({
+    tuning: 'DADGBE',
+    notes: [2, 2, 2, 0, 0, 0],
+  }).exactMatches).toEqual([
+    new Chord({
+      notes: ['E', 'G', 'B'],
+      name: 'Em',
+      chordType: 'm',
+      rootNote: 'E',
+      inversion: null,
+      bassNote: null,
+    }),
+  ]);
+  expect(getChordByGuitarVoicing({
+    tuning: 'EADGBE',
+    notes: [3, 2, 0, 0, 3, 3],
+  }).exactMatches).toEqual([
+    new Chord({
+      notes: ['G', 'B', 'D'],
+      name: 'G',
+      chordType: '',
+      rootNote: 'G',
+      inversion: null,
+      bassNote: null,
+    }),
+  ]);
+  expect(getChordByGuitarVoicing({
+    tuning: 'EADGBE',
+    notes: [3, 0, 0, 2, 1, 2],
+  }).exactMatches).toEqual([
+    new Chord({
+      notes: ['G', 'A', 'D', 'C', 'F#'],
+      name: 'D7',
+      chordType: '7',
+      rootNote: 'D',
+      inversion: null,
+      bassNote: 'G',
+    }),
+  ]);
 });

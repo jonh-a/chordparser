@@ -11,4 +11,9 @@ export interface ChordType {
   structure: number[]; 
   key: 'major' | 'minor' | 'neither',
   duplicate?: boolean,
-}
+};
+
+export interface GuitarChord {
+  tuning: string;
+  notes: number[];
+};

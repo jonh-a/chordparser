@@ -1,4 +1,4 @@
-import { ChordT } from './types';
+import { ChordT, GuitarChord } from './types';
 import {
   changeAccidential,
   chordTypes,
@@ -11,6 +11,7 @@ import {
   removeDuplicateNotes,
   generateAllPossibleChords,
   constructChord,
+  notesAsSharps,
 } from './util';
 
 export const getChordByName = (chordInput: ChordT | string): ChordT => {
@@ -83,4 +84,19 @@ export const getChordByNotes = (notes: string[]): {
   const exactChords = exactMatches.map((chord: ChordT) => constructChord(chord));
 
   return { exactMatches: exactChords, possibleMatches: possibleChords };
+};
+
+export const getChordByGuitarVoicing = (chord: GuitarChord) => {
+  const normalizedTuning = chord.tuning
+    .split('')
+    .map((string: string) => changeAccidential(string, 'sharps'));
+
+  const notes = chord.notes.map((fret: number, index: number) => {
+    const stringTuning = normalizedTuning[index];
+    const startingIndex = notesAsSharps.indexOf(stringTuning);
+    const note = notesAsSharps[startingIndex + fret];
+    return note;
+  });
+
+  return getChordByNotes(notes);
 };

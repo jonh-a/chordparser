@@ -53,7 +53,6 @@ test('test chord transpositions', () => {
     chordType: 'maj7',
     rootNote: 'D',
   }));
-
   expect(new Chord({
     notes: ['G', 'C', 'E', 'G', 'B'],
     name: 'Cmaj7/G',
@@ -70,7 +69,6 @@ test('test chord transpositions', () => {
     chordType: 'maj7',
     rootNote: 'D',
   }));
-
   expect(new Chord({
     notes: ['G', 'E', 'G', 'B', 'C'],
     name: 'Cmaj7/G',
@@ -87,7 +85,6 @@ test('test chord transpositions', () => {
     chordType: 'maj7',
     rootNote: 'D',
   }));
-
   expect(new Chord({
     notes: ['G', 'E', 'G', 'B', 'C'],
     name: 'Cmaj7/G',
@@ -105,3 +102,4 @@ test('test chord transpositions', () => {
     rootNote: 'E',
   }));
 });
+
