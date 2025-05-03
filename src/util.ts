@@ -1,4 +1,5 @@
-import { ChordType } from './types';
+import { Chord } from './chord';
+import { ChordT, ChordType } from './types';
 
 export const notesAsSharps = 'A A# B C C# D D# E F F# G G# '.repeat(3).split(' ');
 export const notesAsFlats = 'A Bb B C Db D Eb E F Gb G Ab '.repeat(3).split(' ');
@@ -204,4 +205,32 @@ export const transposeRootNote = (rootNote: string, semitones: number): string =
   const originalIndex =  notesAsSharps.indexOf(changeAccidential(rootNote, 'sharps'));
   const newIndex = originalIndex + semitones;
   return notesAsSharps[newIndex];
+};
+
+export const generateAllPossibleChords = (notes: string[]): ChordT[] => {
+  const nonDuplicateChordTypes = Object.keys(chordTypes)
+    .filter((chordKey: string) => !chordTypes[chordKey].duplicate);
+
+  return notes
+    .map((rootNote: string) => (
+      nonDuplicateChordTypes
+        .map((chordType: string) => ({
+          name: `${rootNote}${chordType}`,
+          notes: getNotesFromChordType(rootNote, chordType),
+          chordType,
+          rootNote,
+        }))
+    ))
+    .flat();
+};
+
+export const constructChord = ( chord: ChordT ): Chord => {
+  return new Chord({
+    name: chord.name,
+    notes: chord.notes,
+    rootNote: chord.rootNote,
+    bassNote: chord?.bassNote ?? null,
+    chordType: chord.chordType,
+    inversion: chord?.inversion ?? null,
+  });
 };
