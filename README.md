@@ -4,11 +4,11 @@ A small chord parsing library, as the name implies.
 
 ## Getting chord notes from a chord name
 
-Use the `getChordNotesByName` function to get an object containing the chord
-notes and bass note (if it's a slash chord).
+Use the `getChordByName` function to get an object containing the chord notes
+and bass note (if it's a slash chord).
 
 ```typescript
-import { getChordNotesByName } from "chordparser";
+import { getChordByName } from "chordparser";
 
 /*
 Chord {
@@ -20,7 +20,7 @@ Chord {
   inversion: null
 }
 */
-getChordNotesByName("Cmaj7/G");
+getChordByName("Cmaj7/G");
 
 /*
 Chord {
@@ -32,7 +32,7 @@ Chord {
   inversion: null
 }
 */
-getChordNotesByName("D#7sus4");
+getChordByName("D#7sus4");
 
 /*
 Chord {
@@ -44,15 +44,17 @@ Chord {
   inversion: 2
 }
 */
-getChordNotesByName({ name: "Cmaj7/G", inversion: 2 });
+getChordByName({ name: "Cmaj7/G", inversion: 2 });
 ```
 
 ## Getting a chord name from a set of notes
 
-Use the `getChordNameFromNotes` function to get an object containing exact and
+Use the `getChordByNotes` function to get an object containing exact and
 possible matches given a set of notes.
 
 ```typescript
+import { getChordByNotes } from "chordparser";
+
 /*
 [
   Chord {
@@ -65,5 +67,5 @@ possible matches given a set of notes.
   }
 ]
 */
-getChordNameFromNotes(["C", "E", "G", "B"]).exactMatches;
+getChordByNotes(["C", "E", "G", "B"]).exactMatches;
 ```

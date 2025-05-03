@@ -287,4 +287,15 @@ test('test guitar chord parsing', () => {
       bassNote: 'G',
     }),
   ]);
+  expect(getChordByGuitarVoicing([1, 2, 2, 0, 0, 0]).exactMatches)
+  .toEqual([
+    new Chord({
+      notes: ['F', 'B', 'E', 'G'],
+      name: 'Em',
+      chordType: 'm',
+      rootNote: 'E',
+      inversion: null,
+      bassNote: 'F',
+    }),
+  ]);
 });

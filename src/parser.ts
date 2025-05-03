@@ -86,7 +86,11 @@ export const getChordByNotes = (notes: string[]): {
   return { exactMatches: exactChords, possibleMatches: possibleChords };
 };
 
-export const getChordByGuitarVoicing = (chord: GuitarChord) => {
+export const getChordByGuitarVoicing = (chordInput: GuitarChord | number[]) => {
+  const chord: GuitarChord = Array.isArray(chordInput) 
+    ? { tuning: 'EADGBE', notes: chordInput } 
+    : chordInput;
+
   const normalizedTuning = chord.tuning
     .split('')
     .map((string: string) => changeAccidential(string, 'sharps'));
