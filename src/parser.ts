@@ -12,6 +12,7 @@ import {
   generateAllPossibleChords,
   constructChord,
   notesAsSharps,
+  notateSlashChord,
 } from './util';
 
 export const getChordByName = (chordInput: ChordT | string): ChordT => {
@@ -77,7 +78,12 @@ export const getChordByNotes = (notes: string[]): {
       .filter((chord: ChordT) => (
         JSON.stringify([...chord.notes].sort()) === JSON.stringify([...chordNotes].sort())),
       )
-      .map((chord: ChordT) => ({ ...chord, bassNote, notes: normalizedNotes }));
+      .map((chord: ChordT) => ({ 
+        ...chord, 
+        bassNote, 
+        notes: normalizedNotes,
+        name: notateSlashChord(bassNote, chord.name),
+      }));
   };
   
   const possibleChords = possibleMatches.map((chord: ChordT) => constructChord(chord));

@@ -234,3 +234,9 @@ export const constructChord = ( chord: ChordT ): Chord => {
     inversion: chord?.inversion ?? null,
   });
 };
+
+export const notateSlashChord = (bassNote: string | null, chord: string): string => {
+  return bassNote
+    ? `${chord}/${bassNote}`
+    : chord;
+};
