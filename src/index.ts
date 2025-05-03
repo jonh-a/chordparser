@@ -1,8 +1,8 @@
-import { getChordNotesByName, getChordNameFromNotes } from './parser';
+import { getChordByName, getChordByNotes } from './parser';
 import { Chord } from './chord';
 
 export {
-  getChordNotesByName,
-  getChordNameFromNotes,
+  getChordByName,
+  getChordByNotes,
   Chord,
 };

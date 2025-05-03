@@ -13,7 +13,7 @@ import {
   constructChord,
 } from './util';
 
-export const getChordNotesByName = (chordInput: ChordT | string): ChordT => {
+export const getChordByName = (chordInput: ChordT | string): ChordT => {
   const chord: ChordT = typeof chordInput === 'string' ? { name: chordInput } : chordInput;
   if (!chord.name || chord.name === '') return { notes: [], name: '' };
 
@@ -40,7 +40,7 @@ export const getChordNotesByName = (chordInput: ChordT | string): ChordT => {
   });
 };
 
-export const getChordNameFromNotes = (notes: string[]): {
+export const getChordByNotes = (notes: string[]): {
   exactMatches: ChordT[],
   possibleMatches: ChordT[],
 } => {
