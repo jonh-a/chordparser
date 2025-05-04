@@ -101,8 +101,8 @@ possible matches given a set of notes.
 Accepts either:
 
 - An array of `notes` reflecting the fret played (null if muted), or
-- An object containing a `tuning` (array of notes from low to high) and a
-  `notes` array.
+- An object containing a `tuning` (array of notes from low to high), a `capo`
+  (integer or null), and a `notes` array.
 
 ```typescript
 import { getChordByGuitarVoicing } from "chordparser";

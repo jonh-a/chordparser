@@ -261,14 +261,15 @@ test('test guitar chord parsing', () => {
   expect(getChordByGuitarVoicing({
     tuning: ['D', 'A', 'D', 'F#', 'A', 'E'],
     notes: [2, 2, 2, 0, 0, 0],
+    capo: 1,
   }).exactMatches).toStrictEqual([
     new Chord({
-      notes: ['E', 'B', 'F#', 'A'],
-      name: 'B7sus4/E',
+      notes: ['F', 'C', 'G', 'A#'],
+      name: 'C7sus4/F',
       chordType: '7sus4',
-      rootNote: 'B',
+      rootNote: 'C',
       inversion: null,
-      bassNote: 'E',
+      bassNote: 'F',
     }),
   ]);
   expect(getChordByGuitarVoicing({
