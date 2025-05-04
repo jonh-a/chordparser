@@ -1,5 +1,4 @@
-import { Chord } from './chord';
-import { ChordT, ChordType } from './types';
+import { ChordType, ChordT } from '../types';
 
 export const notesAsSharps = 'A A# B C C# D D# E F F# G G# '.repeat(3).split(' ');
 export const notesAsFlats = 'A Bb B C Db D Eb E F Gb G Ab '.repeat(3).split(' ');
@@ -143,52 +142,6 @@ export const handleInversion = (notes: string[], inversion: number): string[] =>
   return [...notesAfterInversion, ...notesBeforeInversion];
 };
 
-export const seperateChordNameAndBassNote = (rawChordName: string): {
-  chordName: string,
-  bassNote: string | null
-} => {
-  /*
-    Parse slash chords into the respective chord name and bass notes.
-
-    seperateChordNameAndBassNote(Cmaj7/G) -> { chordName: 'Cmaj7', bassNote: 'G' }
-  */
-  let chordName: string = rawChordName;
-
-  /*
-    6/9 chords need to be handled specifically so that the 9 isn't parsed 
-    as a slash chord.
-  */
-  const isSixNineChord = rawChordName?.includes('6/9');
-  const bassNote = isSixNineChord
-    ? rawChordName?.split('/')?.[2]
-    : rawChordName?.split('/')?.[1];
-
-  if (bassNote) chordName = isSixNineChord
-    ? `${rawChordName?.split('/')?.[0]}/${rawChordName?.split('/')?.[1]}`
-    : rawChordName?.split('/')?.[0];
-
-  return { chordName, bassNote };
-};
-
-export const getRootNoteAndChordTypeFromName = (chordName: string): {
-  chordType: string,
-  rootNote: string
-} => {
-  /* 
-    Split the chord into root note and chord type either at a space 
-    or immediately after the flat/sharp notation. Otherwise just split 
-    after first character.
-  */
-  let splitIdx = 0;
-  if (chordName.includes(' ')) splitIdx = chordName.indexOf(' ');
-  if (chordName?.[1] === '#' || chordName?.[1] === 'b') splitIdx = 1;
-
-  const chordType = chordName?.substring(splitIdx + 1)?.trim();
-  const rootNote = chordName?.substring(0, splitIdx + 1)?.trim();
-
-  return { chordType, rootNote };
-};
-
 export const getNotesFromChordType = (rootNote: string, chordType: string): string[] => {
   /*
     Get a list of notes given a root note and chord type.
@@ -203,11 +156,6 @@ export const getNotesFromChordType = (rootNote: string, chordType: string): stri
     return notes[rootNoteIdx + n];
   });
 };
-
-export const doesArrayContainSubset = (
-  parentArray: string[], 
-  subArray: string[],
-): boolean => subArray.every((e: string) => parentArray.includes(e));
 
 export const removeDuplicateAndNullNotes = (notes: string[]): string[] => {
   return Array.from(new Set(notes)).filter((n: string) => n !== null);
@@ -238,17 +186,6 @@ export const generateAllPossibleChords = (notes: string[]): ChordT[] => {
         }))
     ))
     .flat();
-};
-
-export const constructChord = ( chord: ChordT ): Chord => {
-  return new Chord({
-    name: chord.name,
-    notes: chord.notes,
-    rootNote: chord.rootNote,
-    bassNote: chord?.bassNote ?? null,
-    chordType: chord.chordType,
-    inversion: chord?.inversion ?? null,
-  });
 };
 
 export const notateSlashChord = (

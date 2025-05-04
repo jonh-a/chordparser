@@ -1,8 +1,8 @@
 import {
   handleInversion,
-  seperateChordNameAndBassNote,
-  getRootNoteAndChordTypeFromName,
   getNotesFromChordType,
+  seperateChordNameAndBassNote, 
+  getRootNoteAndChordTypeFromName,
 } from '../src/util';
 
 test('test inversions', () => {

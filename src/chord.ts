@@ -1,5 +1,5 @@
 import { ChordT } from './types';
-import { handleInversion, getNotesFromChordType, transposeRootNote } from './util';
+import { handleInversion, getNotesFromChordType, transposeRootNote } from './util/notes';
 
 export class Chord {
   name: string;
@@ -57,3 +57,14 @@ export class Chord {
     });
   } 
 }
+
+export const constructChord = ( chord: ChordT ): Chord => {
+  return new Chord({
+    name: chord.name,
+    notes: chord.notes,
+    rootNote: chord.rootNote,
+    bassNote: chord?.bassNote ?? null,
+    chordType: chord.chordType,
+    inversion: chord?.inversion ?? null,
+  });
+};
