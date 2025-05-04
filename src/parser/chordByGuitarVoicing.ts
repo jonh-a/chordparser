@@ -7,11 +7,10 @@ import { getChordByNotes } from './chordByNotes';
 
 export const getChordByGuitarVoicing = (chordInput: GuitarChord | (number | null)[]) => {
   const chord: GuitarChord = Array.isArray(chordInput) 
-    ? { tuning: 'EADGBE', notes: chordInput } 
+    ? { tuning: ['E', 'A', 'D', 'G', 'B', 'E'], notes: chordInput } 
     : chordInput;
 
   const normalizedTuning = chord.tuning
-    .split('')
     .map((string: string) => changeAccidential(string, 'sharps'));
 
   const notes = chord.notes.map((fret: number, index: number) => {

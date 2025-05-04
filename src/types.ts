@@ -14,6 +14,6 @@ export interface ChordType {
 };
 
 export interface GuitarChord {
-  tuning: string;
+  tuning: string[];
   notes: (number | null)[];
 };

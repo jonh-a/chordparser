@@ -133,7 +133,7 @@ getChordByGuitarVoicing([null, 3, 2, 0, 3, null]).exactMatches;
 ]
 */
 getChordByGuitarVoicing({
-  tuning: "DADGAD",
+  tuning: ["D", "A", "D", "G", "A", "D"],
   notes: [5, 5, 0, 4, 0, 5],
 }).exactMatches;
 ```

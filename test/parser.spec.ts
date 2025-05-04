@@ -259,20 +259,20 @@ test('test parsing name from notes', () => {
 
 test('test guitar chord parsing', () => {
   expect(getChordByGuitarVoicing({
-    tuning: 'DADGBE',
+    tuning: ['D', 'A', 'D', 'F#', 'A', 'E'],
     notes: [2, 2, 2, 0, 0, 0],
   }).exactMatches).toStrictEqual([
     new Chord({
-      notes: ['E', 'G', 'B'],
-      name: 'Em',
-      chordType: 'm',
-      rootNote: 'E',
+      notes: ['E', 'B', 'F#', 'A'],
+      name: 'B7sus4/E',
+      chordType: '7sus4',
+      rootNote: 'B',
       inversion: null,
-      bassNote: null,
+      bassNote: 'E',
     }),
   ]);
   expect(getChordByGuitarVoicing({
-    tuning: 'EADGBE',
+    tuning: ['E', 'A', 'D', 'G', 'B', 'E'],
     notes: [3, 2, 0, 0, 3, 3],
   }).exactMatches).toStrictEqual([
     new Chord({
@@ -284,10 +284,7 @@ test('test guitar chord parsing', () => {
       bassNote: null,
     }),
   ]);
-  expect(getChordByGuitarVoicing({
-    tuning: 'EADGBE',
-    notes: [3, 0, 0, 2, 1, 2],
-  }).exactMatches).toStrictEqual([
+  expect(getChordByGuitarVoicing([3, 0, 0, 2, 1, 2]).exactMatches).toStrictEqual([
     new Chord({
       notes: ['G', 'D', 'F#', 'A', 'C'],
       name: 'D7/G',
