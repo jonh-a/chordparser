@@ -11,7 +11,7 @@ export const getChordByGuitarVoicing = (chordInput: GuitarChord | (number | null
     ? { tuning: ['E', 'A', 'D', 'G', 'B', 'E'], notes: chordInput, capo: 0 } 
     : chordInput;
 
-  const { capo = 0, tuning } = chord;
+  const { capo = 0, tuning = ['E', 'A', 'D', 'G', 'B', 'E'] } = chord;
 
   const normalizedTuning = tuning
     .map((string: string) => changeAccidential(string, 'sharps'))
