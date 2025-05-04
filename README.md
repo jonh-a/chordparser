@@ -2,7 +2,7 @@
 
 A small chord parsing library, as the name implies.
 
-## Getting chord notes from a chord name
+## Getting chord by name/notation
 
 Use the `getChordByName` function to get an object containing the chord notes
 and bass note (if it's a slash chord).
@@ -47,7 +47,7 @@ Chord {
 getChordByName({ name: "Cmaj7/G", inversion: 2 });
 ```
 
-## Getting a chord name from a set of notes
+## Getting a chord from a set of notes
 
 Use the `getChordByNotes` function to get an object containing exact and
 possible matches given a set of notes.
@@ -67,5 +67,73 @@ import { getChordByNotes } from "chordparser";
   }
 ]
 */
-getChordByNotes(["C", "E", "G", "B"]).exactMatches;
+getChordByNotes(["G", "C", "E", "G", "B"]).exactMatches;
+
+/*
+[
+  Chord {
+    name: 'D#add9/G',
+    notes: [ 'G', 'D#', 'A#', 'F' ],
+    rootNote: 'D#',
+    bassNote: 'G',
+    chordType: 'add9',
+    inversion: null
+  }
+]
+*/
+getChordByNotes(["G", "A#", "D#", "F"]).exactMatches;
+```
+
+## Getting a chord from a guitar voicing
+
+Use the `getChordByGuitarVoicing` function to get an object containing exact and
+possible matches given a set of notes.
+
+```typescript
+import { getChordByGuitarVoicing } from "chordparser";
+
+/*
+[
+  Chord {
+    name: 'Em',
+    notes: [ 'E', 'G', 'B' ],
+    rootNote: 'E',
+    bassNote: null,
+    chordType: 'm',
+    inversion: null
+  }
+]
+*/
+getChordByGuitarVoicing([0, 2, 2, 0, 0, 0]).exactMatches;
+
+/*
+[
+  Chord {
+    name: 'Cadd9',
+    notes: [ 'C', 'E', 'G', 'D' ],
+    rootNote: 'C',
+    bassNote: null,
+    chordType: 'add9',
+    inversion: null
+  }
+]
+*/
+getChordByGuitarVoicing([null, 3, 2, 0, 3, null]).exactMatches;
+
+/*
+[
+  Chord {
+    name: 'Gadd9',
+    notes: [ 'G', 'B', 'D', 'A' ],
+    rootNote: 'G',
+    bassNote: null,
+    chordType: 'add9',
+    inversion: null
+  }
+]
+*/
+getChordByGuitarVoicing({
+  tuning: "DADGAD",
+  notes: [5, 5, 0, 4, 0, 5],
+}).exactMatches;
 ```

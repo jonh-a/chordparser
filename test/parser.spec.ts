@@ -2,7 +2,7 @@ import { getChordByGuitarVoicing, getChordByName, getChordByNotes } from '../src
 import { Chord } from '../src/chord';
 
 test('test basic string input', () => {
-  expect(getChordByName('Cmaj7')).toEqual(
+  expect(getChordByName('Cmaj7')).toStrictEqual(
     new Chord({
       notes: ['C', 'E', 'G', 'B'],
       name: 'Cmaj7',
@@ -13,7 +13,7 @@ test('test basic string input', () => {
     }),
   );
 
-  expect(getChordByName('Db7')).toEqual(
+  expect(getChordByName('Db7')).toStrictEqual(
     new Chord({
       notes: ['Db', 'F', 'Ab', 'B'],
       name: 'Db7',
@@ -26,7 +26,7 @@ test('test basic string input', () => {
 });
 
 test('test major triads', () => {
-  expect(getChordByName({ name: 'C' })).toEqual(
+  expect(getChordByName({ name: 'C' })).toStrictEqual(
     new Chord({
       notes: ['C', 'E', 'G'],
       name: 'C',
@@ -36,7 +36,7 @@ test('test major triads', () => {
       chordType: '',
     }),
   );
-  expect(getChordByName({ name: 'D#m7' })).toEqual(
+  expect(getChordByName({ name: 'D#m7' })).toStrictEqual(
     new Chord({
       notes: ['D#', 'F#', 'A#', 'C#'],
       name: 'D#m7',
@@ -46,7 +46,7 @@ test('test major triads', () => {
       chordType: 'm7',
     }),
   );
-  expect(getChordByName({ name: 'Db7' })).toEqual(
+  expect(getChordByName({ name: 'Db7' })).toStrictEqual(
     new Chord({
       notes: ['Db', 'F', 'Ab', 'B'],
       name: 'Db7',
@@ -56,7 +56,7 @@ test('test major triads', () => {
       chordType: '7',
     }),
   );
-  expect(getChordByName({ name: 'Cm7' })).toEqual(
+  expect(getChordByName({ name: 'Cm7' })).toStrictEqual(
     new Chord({
       notes: ['C', 'Eb', 'G', 'Bb'],
       name: 'Cm7',
@@ -66,7 +66,7 @@ test('test major triads', () => {
       chordType: 'm7',
     }),
   );
-  expect(getChordByName({ name: 'C6/9' })).toEqual(
+  expect(getChordByName({ name: 'C6/9' })).toStrictEqual(
     new Chord({
       notes: ['C', 'E', 'G', 'A', 'D'],
       name: 'C6/9',
@@ -79,7 +79,7 @@ test('test major triads', () => {
 });
 
 test('test triads with bass notes', () => {
-  expect(getChordByName({ name: 'C/G' })).toEqual(
+  expect(getChordByName({ name: 'C/G' })).toStrictEqual(
     new Chord({
       notes: ['G', 'C', 'E', 'G'],
       name: 'C',
@@ -89,7 +89,7 @@ test('test triads with bass notes', () => {
       rootNote: 'C',
     }),
   );
-  expect(getChordByName({ name: 'D#m7/F#' })).toEqual(
+  expect(getChordByName({ name: 'D#m7/F#' })).toStrictEqual(
     new Chord({
       notes: ['F#', 'D#', 'F#', 'A#', 'C#'],
       name: 'D#m7',
@@ -99,7 +99,7 @@ test('test triads with bass notes', () => {
       chordType: 'm7',
     }),
   );
-  expect(getChordByName({ name: 'Cm7/G' })).toEqual(
+  expect(getChordByName({ name: 'Cm7/G' })).toStrictEqual(
     new Chord({
       notes: ['G', 'C', 'Eb', 'G', 'Bb'],
       name: 'Cm7',
@@ -109,7 +109,7 @@ test('test triads with bass notes', () => {
       rootNote: 'C',
     }),
   );
-  expect(getChordByName({ name: 'C6/9/G' })).toEqual(
+  expect(getChordByName({ name: 'C6/9/G' })).toStrictEqual(
     new Chord({
       notes: ['G', 'C', 'E', 'G', 'A', 'D'],
       name: 'C6/9',
@@ -119,7 +119,7 @@ test('test triads with bass notes', () => {
       chordType: '6/9',
     }),
   );
-  expect(getChordByName({ name: 'Db7/Ab' })).toEqual(
+  expect(getChordByName({ name: 'Db7/Ab' })).toStrictEqual(
     new Chord({
       notes: ['Ab', 'Db', 'F', 'Ab', 'B'],
       name: 'Db7',
@@ -132,7 +132,7 @@ test('test triads with bass notes', () => {
 });
 
 test('test inversions', () => {
-  expect(getChordByName({ name: 'C', inversion: 1 })).toEqual(
+  expect(getChordByName({ name: 'C', inversion: 1 })).toStrictEqual(
     new Chord({
       notes: ['E', 'G', 'C'],
       name: 'C',
@@ -142,7 +142,7 @@ test('test inversions', () => {
       chordType: '',
     }),
   );
-  expect(getChordByName({ name: 'C/G', inversion: 1 })).toEqual(
+  expect(getChordByName({ name: 'C/G', inversion: 1 })).toStrictEqual(
     new Chord({
       notes: ['G', 'E', 'G', 'C'],
       name: 'C',
@@ -152,7 +152,7 @@ test('test inversions', () => {
       rootNote: 'C',
     }),
   );
-  expect(getChordByName({ name: 'C', inversion: 2 })).toEqual(
+  expect(getChordByName({ name: 'C', inversion: 2 })).toStrictEqual(
     new Chord({
       notes: ['G', 'C', 'E'],
       name: 'C',
@@ -162,7 +162,7 @@ test('test inversions', () => {
       chordType: '',
     }),
   );
-  expect(getChordByName({ name: 'C/G', inversion: 2 })).toEqual(
+  expect(getChordByName({ name: 'C/G', inversion: 2 })).toStrictEqual(
     new Chord({
       notes: ['G', 'G', 'C', 'E'],
       name: 'C',
@@ -175,7 +175,7 @@ test('test inversions', () => {
 });
 
 test('test parsing name from notes', () => {
-  expect(getChordByNotes(['C', 'E', 'G']).exactMatches).toEqual([
+  expect(getChordByNotes(['C', 'E', 'G']).exactMatches).toStrictEqual([
     new Chord({
       notes: ['C', 'E', 'G'],
       name: 'C',
@@ -185,7 +185,7 @@ test('test parsing name from notes', () => {
       bassNote: null,
     }),
   ]);
-  expect(getChordByNotes(['G', 'C', 'E']).exactMatches).toEqual([
+  expect(getChordByNotes(['G', 'C', 'E']).exactMatches).toStrictEqual([
     new Chord({
       notes: ['G', 'C', 'E'],
       name: 'C/G',
@@ -195,7 +195,7 @@ test('test parsing name from notes', () => {
       bassNote: 'G',
     }),
   ]);
-  expect(getChordByNotes(['G', 'D', 'F#', 'A']).exactMatches).toEqual([
+  expect(getChordByNotes(['G', 'D', 'F#', 'A']).exactMatches).toStrictEqual([
     new Chord({
       notes: [ 'G', 'D', 'F#', 'A'],
       name: 'D/G',
@@ -205,7 +205,7 @@ test('test parsing name from notes', () => {
       bassNote: 'G',
     }),
   ]);
-  expect(getChordByNotes(['G', 'G', 'C', 'E']).exactMatches).toEqual([
+  expect(getChordByNotes(['G', 'G', 'C', 'E']).exactMatches).toStrictEqual([
     new Chord({
       notes: ['G', 'C', 'E'],
       name: 'C/G',
@@ -215,7 +215,7 @@ test('test parsing name from notes', () => {
       bassNote: 'G',
     }),
   ]);
-  expect(getChordByNotes(['G', 'B', 'C', 'E']).exactMatches).toEqual([
+  expect(getChordByNotes(['G', 'B', 'C', 'E']).exactMatches).toStrictEqual([
     new Chord({
       notes: ['G', 'C', 'E', 'B'],
       name: 'Cmaj7/G',
@@ -225,7 +225,7 @@ test('test parsing name from notes', () => {
       bassNote: 'G',
     }),
   ]);
-  expect(getChordByNotes(['G', 'Bb', 'Eb', 'F']).exactMatches).toEqual([
+  expect(getChordByNotes(['G', 'Bb', 'Eb', 'F']).exactMatches).toStrictEqual([
     new Chord({
       notes: ['G', 'D#', 'A#', 'F'],
       name: 'D#add9/G',
@@ -234,8 +234,8 @@ test('test parsing name from notes', () => {
       inversion: null,
       bassNote: 'G',
     }),
-  ]);;
-  expect(getChordByNotes(['A#', 'D', 'F#', 'A']).exactMatches).toEqual([
+  ]);
+  expect(getChordByNotes(['A#', 'D', 'F#', 'A']).exactMatches).toStrictEqual([
     new Chord({
       notes: ['A#', 'D', 'F#', 'A'],
       name: 'D/A#',
@@ -245,7 +245,7 @@ test('test parsing name from notes', () => {
       bassNote: 'A#',
     }),
   ]);;
-  expect(getChordByNotes(['E', 'Bb', 'Db', 'F']).exactMatches).toEqual([
+  expect(getChordByNotes(['E', 'Bb', 'Db', 'F']).exactMatches).toStrictEqual([
     new Chord({
       notes: ['E', 'A#', 'C#', 'F'],
       name: 'A#m/E',
@@ -261,7 +261,7 @@ test('test guitar chord parsing', () => {
   expect(getChordByGuitarVoicing({
     tuning: 'DADGBE',
     notes: [2, 2, 2, 0, 0, 0],
-  }).exactMatches).toEqual([
+  }).exactMatches).toStrictEqual([
     new Chord({
       notes: ['E', 'G', 'B'],
       name: 'Em',
@@ -274,7 +274,7 @@ test('test guitar chord parsing', () => {
   expect(getChordByGuitarVoicing({
     tuning: 'EADGBE',
     notes: [3, 2, 0, 0, 3, 3],
-  }).exactMatches).toEqual([
+  }).exactMatches).toStrictEqual([
     new Chord({
       notes: ['G', 'B', 'D'],
       name: 'G',
@@ -287,7 +287,7 @@ test('test guitar chord parsing', () => {
   expect(getChordByGuitarVoicing({
     tuning: 'EADGBE',
     notes: [3, 0, 0, 2, 1, 2],
-  }).exactMatches).toEqual([
+  }).exactMatches).toStrictEqual([
     new Chord({
       notes: ['G', 'D', 'F#', 'A', 'C'],
       name: 'D7/G',
@@ -298,7 +298,7 @@ test('test guitar chord parsing', () => {
     }),
   ]);
   expect(getChordByGuitarVoicing([1, 2, 2, 0, 0, 0]).exactMatches)
-  .toEqual([
+  .toStrictEqual([
     new Chord({
       notes: ['F', 'E', 'G', 'B'],
       name: 'Em/F',
@@ -309,7 +309,7 @@ test('test guitar chord parsing', () => {
     }),
   ]);
   expect(getChordByGuitarVoicing([null, null, 0, 2, null, null]).exactMatches)
-  .toEqual([
+  .toStrictEqual([
     new Chord({
       notes: ['D', 'A'],
       name: 'D5',
