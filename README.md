@@ -1,11 +1,18 @@
 # Chord Parser
 
-A small chord parsing library, as the name implies.
+A small library for parsing chords by name or by piano/guitar voicing.
 
-## Getting chord by name/notation
+## Usage
+
+### Getting chord by name/notation
 
 Use the `getChordByName` function to get an object containing the chord notes
 and bass note (if it's a slash chord).
+
+Accepts either:
+
+- A string reflecting the chord name, or
+- An object containing the chord `name` and `inversion`.
 
 ```typescript
 import { getChordByName } from "chordparser";
@@ -47,10 +54,12 @@ Chord {
 getChordByName({ name: "Cmaj7/G", inversion: 2 });
 ```
 
-## Getting a chord from a set of notes
+### Getting a chord from a set of notes
 
 Use the `getChordByNotes` function to get an object containing exact and
 possible matches given a set of notes.
+
+Accepts an array of notes.
 
 ```typescript
 import { getChordByNotes } from "chordparser";
@@ -84,10 +93,16 @@ getChordByNotes(["G", "C", "E", "G", "B"]).exactMatches;
 getChordByNotes(["G", "A#", "D#", "F"]).exactMatches;
 ```
 
-## Getting a chord from a guitar voicing
+### Getting a chord from a guitar voicing
 
 Use the `getChordByGuitarVoicing` function to get an object containing exact and
 possible matches given a set of notes.
+
+Accepts either:
+
+- An array of `notes` reflecting the fret played (null if muted), or
+- An object containing a `tuning` (array of notes from low to high) and a
+  `notes` array.
 
 ```typescript
 import { getChordByGuitarVoicing } from "chordparser";
