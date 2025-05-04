@@ -147,10 +147,16 @@ export const seperateChordNameAndBassNote = (rawChordName: string): {
   chordName: string,
   bassNote: string | null
 } => {
+  /*
+    Parse slash chords into the respective chord name and bass notes.
+
+    seperateChordNameAndBassNote(Cmaj7/G) -> { chordName: 'Cmaj7', bassNote: 'G' }
+  */
   let chordName: string = rawChordName;
 
   /*
-    6/9 chords need to be handled specifically so that the 9 isn't parsed as a slash chord.
+    6/9 chords need to be handled specifically so that the 9 isn't parsed 
+    as a slash chord.
   */
   const isSixNineChord = rawChordName?.includes('6/9');
   const bassNote = isSixNineChord
@@ -170,8 +176,8 @@ export const getRootNoteAndChordTypeFromName = (chordName: string): {
 } => {
   /* 
     Split the chord into root note and chord type either at a space 
-    or immediately after the flat/sharp notation.
-    Otherwise just split after first character.
+    or immediately after the flat/sharp notation. Otherwise just split 
+    after first character.
   */
   let splitIdx = 0;
   if (chordName.includes(' ')) splitIdx = chordName.indexOf(' ');
@@ -184,6 +190,11 @@ export const getRootNoteAndChordTypeFromName = (chordName: string): {
 };
 
 export const getNotesFromChordType = (rootNote: string, chordType: string): string[] => {
+  /*
+    Get a list of notes given a root note and chord type.
+
+    getNotesFromChordType('C', 'maj7') -> ['C', 'E', 'G', 'B']
+  */
   const { notes } = getNotesInScale(rootNote, chordType);
   const rootNoteIdx: number = notes?.indexOf(rootNote);
   const chordStructure = chordTypes[chordType].structure;
@@ -193,9 +204,10 @@ export const getNotesFromChordType = (rootNote: string, chordType: string): stri
   });
 };
 
-export const doesArrayContainSubset = (parentArray: string[], subArray: string[]): boolean => {
-  return subArray.every((e: string) => parentArray.includes(e));
-};
+export const doesArrayContainSubset = (
+  parentArray: string[], 
+  subArray: string[],
+): boolean => subArray.every((e: string) => parentArray.includes(e));
 
 export const removeDuplicateAndNullNotes = (notes: string[]): string[] => {
   return Array.from(new Set(notes)).filter((n: string) => n !== null);
@@ -208,6 +220,10 @@ export const transposeRootNote = (rootNote: string, semitones: number): string =
 };
 
 export const generateAllPossibleChords = (notes: string[]): ChordT[] => {
+  /*
+    Iterate through the array of notes and create a list of all possible
+    chord types using each note in the array as a potential root note.
+  */
   const nonDuplicateChordTypes = Object.keys(chordTypes)
     .filter((chordKey: string) => !chordTypes[chordKey].duplicate);
 
@@ -235,13 +251,16 @@ export const constructChord = ( chord: ChordT ): Chord => {
   });
 };
 
-export const notateSlashChord = (bassNote: string | null, chord: string): string => {
+export const notateSlashChord = (
+  bassNote: string | null, 
+  chord: string,
+): string => {
   return bassNote
     ? `${chord}/${bassNote}`
     : chord;
 };
 
-export const suffixBassNoteIfNotRootNote = (
+export const handleBassNoteIfNotRootNote = (
   bassNote: string,
   rootNote: string,
   notes: string[],
@@ -249,12 +268,19 @@ export const suffixBassNoteIfNotRootNote = (
 ): {
   name: string,
   notes: string[],
+  bassNote: string | null,
 } => {
+  /*
+    If the root note differs from the first note in the chords array, the chord
+    should be treated as a slash chord (ie, ['G', 'C', 'E'] should be C/G instead
+    of C).
+  */
   if (bassNote != rootNote) {
     return {
       name: notateSlashChord(bassNote, name),
-      notes: [bassNote, ...notes],
+      notes: removeDuplicateAndNullNotes([bassNote, ...notes]),
+      bassNote,
     };
   }
-  return {name, notes };
+  return {name, notes, bassNote: null };
 };

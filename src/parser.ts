@@ -12,7 +12,7 @@ import {
   constructChord,
   notesAsSharps,
   removeDuplicateAndNullNotes,
-  suffixBassNoteIfNotRootNote,
+  handleBassNoteIfNotRootNote,
 } from './util';
 
 export const getChordByName = (chordInput: ChordT | string): ChordT => {
@@ -60,18 +60,13 @@ export const getChordByNotes = (notes: string[]): {
       JSON.stringify([...chord.notes].sort()) === JSON.stringify([...normalizedNotes].sort())),
     )
     .map((chord: ChordT) => {
-      const { name, notes } = suffixBassNoteIfNotRootNote(
+      const { name, notes, bassNote } = handleBassNoteIfNotRootNote(
         normalizedNotes[0], 
         chord.rootNote, 
         chord.notes, 
         chord.name,
       );
-      return { 
-        ...chord, 
-        name, 
-        notes: removeDuplicateAndNullNotes(notes), 
-        bassNote: normalizedNotes[0] !== chord.rootNote ? normalizedNotes[0] : null, 
-      };
+      return { ...chord, name, notes, bassNote };
     });
 
   /*
@@ -93,18 +88,13 @@ export const getChordByNotes = (notes: string[]): {
         JSON.stringify([...chord.notes].sort()) === JSON.stringify([...chordNotes].sort())),
       )
       .map((chord: ChordT) => { 
-        const { name, notes } = suffixBassNoteIfNotRootNote(
+        const { name, notes, bassNote } = handleBassNoteIfNotRootNote(
           normalizedNotes[0], 
           chord.rootNote, 
           chord.notes, 
           chord.name,
         );
-        return { 
-          ...chord, 
-          name, 
-          notes: removeDuplicateAndNullNotes(notes), 
-          bassNote: bassNote !== chord.rootNote ? bassNote : null,
-        };
+        return { ...chord, name, notes, bassNote };
       });
   };
   
