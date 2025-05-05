@@ -2,7 +2,6 @@ name: test and build
 
 on:
   push:
-    branches: ["main"]
 
 jobs:
   build:
@@ -20,6 +19,3 @@ jobs:
 
       - name: run jest tests
         run: npm run test
-
-      - name: build package
-        run: npm run build
