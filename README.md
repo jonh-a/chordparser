@@ -1,4 +1,4 @@
-# Chord Parser
+# Parse-chord
 
 A small library for parsing chords by name or by piano/guitar voicing.
 
@@ -15,7 +15,7 @@ Accepts either:
 - An object containing the chord `name` and `inversion`.
 
 ```typescript
-import { getChordByName } from "chordparser";
+import { getChordByName } from "parse-chord";
 
 /*
 Chord {
@@ -62,7 +62,7 @@ possible matches given a set of notes.
 Accepts an array of notes.
 
 ```typescript
-import { getChordByNotes } from "chordparser";
+import { getChordByNotes } from "parse-chord";
 
 /*
 [
@@ -105,7 +105,7 @@ Accepts either:
   (integer or null), and a `notes` array.
 
 ```typescript
-import { getChordByGuitarVoicing } from "chordparser";
+import { getChordByGuitarVoicing } from "parse-chord";
 
 /*
 [
