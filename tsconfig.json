@@ -4,7 +4,7 @@
       "declarationDir": "dist/types",
       "outDir": "dist",
       "lib": ["es2016"],
-      "sourceMap": true
+      "sourceMap": false
     },
     "include": [
       "src/**/*.ts"
