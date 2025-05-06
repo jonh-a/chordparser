@@ -3,6 +3,7 @@ import {
   getNotesFromChordType,
   seperateChordNameAndBassNote, 
   getRootNoteAndChordTypeFromName,
+  getAllChordTypes,
 } from '../src/util';
 
 test('test inversions', () => {
@@ -28,4 +29,8 @@ test('test note retrieval', () => {
   expect(getNotesFromChordType('C', 'maj7')).toEqual(['C', 'E', 'G', 'B']);
   expect(getNotesFromChordType('C', '6/9')).toEqual(['C', 'E', 'G', 'A', 'D']);
   expect(getNotesFromChordType('C', '')).toEqual(['C', 'E', 'G']);
+});
+
+test('test all chord types', () => {
+  expect(getAllChordTypes()).toContain('maj');
 });

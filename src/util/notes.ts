@@ -221,3 +221,7 @@ export const handleBassNoteIfNotRootNote = (
   }
   return {name, notes, bassNote: null };
 };
+
+export const getAllChordTypes = () => {
+  return Object.keys(chordTypes);
+};

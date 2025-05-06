@@ -12,6 +12,7 @@ import {
   transposeRootNote,
   handleBassNoteIfNotRootNote,
   handleInversion,
+  getAllChordTypes,
 } from './notes';
 import { 
   seperateChordNameAndBassNote, 
@@ -34,4 +35,5 @@ export {
   seperateChordNameAndBassNote, 
   getRootNoteAndChordTypeFromName,
   handleInversion,
+  getAllChordTypes,
 };
