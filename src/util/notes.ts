@@ -122,10 +122,10 @@ export const changeAccidential = (note: string, changeTo: 'sharps' | 'flats') =>
   const sharpReplacements = { Bb: 'A#', Db: 'C#', Eb: 'D#', Gb: 'F#', Ab: 'G#' };
   const flatReplacements = { 'A#': 'Bb', 'C#': 'Db', 'D#': 'Eb', 'F#': 'Gb', 'G#': 'Ab' };
 
-  const replacements = changeTo === 'sharps' 
-    ? sharpReplacements 
+  const replacements = changeTo === 'sharps'
+    ? sharpReplacements
     : flatReplacements;
-  
+
   for (const [original, replacement] of Object.entries(replacements)) {
     if (note?.startsWith(original)) {
       return note?.replace(original, replacement);
@@ -162,34 +162,34 @@ export const removeDuplicateAndNullNotes = (notes: string[]): string[] => {
 };
 
 export const transposeRootNote = (rootNote: string, semitones: number): string => {
-  const originalIndex =  notesAsSharps.indexOf(changeAccidential(rootNote, 'sharps'));
+  const originalIndex = notesAsSharps.indexOf(changeAccidential(rootNote, 'sharps'));
   const newIndex = originalIndex + semitones;
   return notesAsSharps[newIndex];
 };
 
-export const generateAllPossibleChords = (notes: string[]): ChordT[] => {
+export const generateAllPossibleChordsFromRootNote = (rootNote: string): ChordT[] => {
+  return Object.keys(chordTypes)
+    .filter((chordKey: string) => !chordTypes[chordKey].duplicate)
+    .map((chordType: string) => ({
+      name: `${rootNote}${chordType}`,
+      notes: getNotesFromChordType(rootNote, chordType),
+      chordType,
+      rootNote,
+    }));
+};
+
+export const generateAllPossiblePermutationsFromNotesArray = (notes: string[]): ChordT[] => {
   /*
     Iterate through the array of notes and create a list of all possible
     chord types using each note in the array as a potential root note.
   */
-  const nonDuplicateChordTypes = Object.keys(chordTypes)
-    .filter((chordKey: string) => !chordTypes[chordKey].duplicate);
-
   return notes
-    .map((rootNote: string) => (
-      nonDuplicateChordTypes
-        .map((chordType: string) => ({
-          name: `${rootNote}${chordType}`,
-          notes: getNotesFromChordType(rootNote, chordType),
-          chordType,
-          rootNote,
-        }))
-    ))
+    .map((rootNote: string) => generateAllPossibleChordsFromRootNote(rootNote))
     .flat();
 };
 
 export const notateSlashChord = (
-  bassNote: string | null, 
+  bassNote: string | null,
   chord: string,
 ): string => {
   return bassNote
@@ -219,7 +219,7 @@ export const handleBassNoteIfNotRootNote = (
       bassNote,
     };
   }
-  return {name, notes, bassNote: null };
+  return { name, notes, bassNote: null };
 };
 
 export const getAllChordTypes = () => {

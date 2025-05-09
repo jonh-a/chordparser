@@ -1,8 +1,8 @@
 import { ChordT } from '../types';
 import { constructChord } from '../chord';
-import { 
+import {
   changeAccidential,
-  generateAllPossibleChords,
+  generateAllPossiblePermutationsFromNotesArray,
   removeDuplicateAndNullNotes,
   handleBassNoteIfNotRootNote,
   doesArrayContainSubset,
@@ -16,7 +16,7 @@ export const getChordByNotes = (notes: string[]): {
     (note: string) => changeAccidential(note, 'sharps'),
   ));
 
-  let allPossibleChordTypes = generateAllPossibleChords(normalizedNotes);
+  let allPossibleChordTypes = generateAllPossiblePermutationsFromNotesArray(normalizedNotes);
 
   let possibleMatches = allPossibleChordTypes
     .filter((chordType: ChordT) => doesArrayContainSubset(chordType.notes, normalizedNotes));
@@ -27,9 +27,9 @@ export const getChordByNotes = (notes: string[]): {
     )
     .map((chord: ChordT) => {
       const { name, notes, bassNote } = handleBassNoteIfNotRootNote(
-        normalizedNotes[0], 
-        chord.rootNote, 
-        chord.notes, 
+        normalizedNotes[0],
+        chord.rootNote,
+        chord.notes,
         chord.name,
       );
       return { ...chord, name, notes, bassNote };
@@ -43,27 +43,27 @@ export const getChordByNotes = (notes: string[]): {
   */
   if (exactMatches.length === 0) {
     const [bassNote, ...chordNotes] = normalizedNotes;
-    allPossibleChordTypes = generateAllPossibleChords(chordNotes);
+    allPossibleChordTypes = generateAllPossiblePermutationsFromNotesArray(chordNotes);
 
     possibleMatches = allPossibleChordTypes
       .filter((chordType: ChordT) => doesArrayContainSubset(chordType.notes, chordNotes))
       .map((chord: ChordT) => ({ ...chord, bassNote }));
-    
+
     exactMatches = possibleMatches
       .filter((chord: ChordT) => (
         JSON.stringify([...chord.notes].sort()) === JSON.stringify([...chordNotes].sort())),
       )
-      .map((chord: ChordT) => { 
+      .map((chord: ChordT) => {
         const { name, notes, bassNote } = handleBassNoteIfNotRootNote(
-          normalizedNotes[0], 
-          chord.rootNote, 
-          chord.notes, 
+          normalizedNotes[0],
+          chord.rootNote,
+          chord.notes,
           chord.name,
         );
         return { ...chord, name, notes, bassNote };
       });
   };
-  
+
   const possibleChords = possibleMatches.map((chord: ChordT) => constructChord(chord));
   const exactChords = exactMatches.map((chord: ChordT) => constructChord(chord));
 

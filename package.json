@@ -13,6 +13,13 @@
     "build": "tsc",
     "lt": "npm run lint && npm run test"
   },
+  "keywords": [
+    "music",
+    "chords",
+    "piano",
+    "guitar",
+    "music theory"
+  ],
   "author": "jonh-a",
   "license": "ISC",
   "repository": {

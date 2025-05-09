@@ -1,5 +1,11 @@
 import { ChordT } from './types';
-import { handleInversion, getNotesFromChordType, transposeRootNote } from './util/notes';
+import {
+  handleInversion,
+  getNotesFromChordType,
+  transposeRootNote,
+  generateAllPossibleChordsFromRootNote,
+  doesArrayContainSubset,
+} from './util';
 
 export class Chord {
   name: string;
@@ -30,7 +36,7 @@ export class Chord {
       ...this.opts,
       inversion,
       notes: handleInversion(
-        getNotesFromChordType(this.rootNote, this.chordType), 
+        getNotesFromChordType(this.rootNote, this.chordType),
         inversion,
       ),
     });
@@ -40,11 +46,11 @@ export class Chord {
     const transposedRoot = transposeRootNote(this.rootNote, semitones);
     const transposedBass = this.bassNote ? transposeRootNote(this.bassNote, semitones) : null;
     const transposedNotes = handleInversion(
-      getNotesFromChordType(transposedRoot, this.chordType), 
+      getNotesFromChordType(transposedRoot, this.chordType),
       this.inversion,
     );
     if (transposedBass) transposedNotes.unshift(transposedBass);
-    
+
     const transposedName = `${transposedRoot}${this.chordType}`
       + `${transposedBass ? '/' + transposedBass : ''}`;
 
@@ -55,10 +61,20 @@ export class Chord {
       name: transposedName,
       bassNote: transposedBass,
     });
-  } 
+  }
+
+  public extensions() {
+    return generateAllPossibleChordsFromRootNote(this.rootNote)
+      .filter((chord: Chord) => doesArrayContainSubset(chord.notes, this.notes));
+  }
+
+  public subsets() {
+    return generateAllPossibleChordsFromRootNote(this.rootNote)
+      .filter((chord: Chord) => doesArrayContainSubset(this.notes, chord.notes));
+  }
 }
 
-export const constructChord = ( chord: ChordT ): Chord => {
+export const constructChord = (chord: ChordT): Chord => {
   return new Chord({
     name: chord.name,
     notes: chord.notes,
