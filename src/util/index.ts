@@ -1,12 +1,13 @@
-import { doesArrayContainSubset } from './misc';
-import { 
-  chordTypes, 
-  notesAsFlats, 
-  notesAsSharps, 
-  notateSlashChord, 
-  changeAccidential, 
-  generateAllPossibleChords, 
-  getNotesFromChordType, 
+import { doesArrayContainSubset, areArraysEqual } from './misc';
+import {
+  chordTypes,
+  notesAsFlats,
+  notesAsSharps,
+  notateSlashChord,
+  changeAccidential,
+  generateAllPossibleChordsFromRootNote,
+  generateAllPossiblePermutationsFromNotesArray,
+  getNotesFromChordType,
   getNotesInScale,
   removeDuplicateAndNullNotes,
   transposeRootNote,
@@ -14,26 +15,28 @@ import {
   handleInversion,
   getAllChordTypes,
 } from './notes';
-import { 
-  seperateChordNameAndBassNote, 
+import {
+  seperateChordNameAndBassNote,
   getRootNoteAndChordTypeFromName,
 } from './parsing';
 
 export {
   doesArrayContainSubset,
-  chordTypes, 
-  notesAsFlats, 
-  notesAsSharps, 
-  notateSlashChord, 
-  changeAccidential, 
-  generateAllPossibleChords, 
-  getNotesFromChordType, 
+  chordTypes,
+  notesAsFlats,
+  notesAsSharps,
+  notateSlashChord,
+  changeAccidential,
+  generateAllPossibleChordsFromRootNote,
+  generateAllPossiblePermutationsFromNotesArray,
+  getNotesFromChordType,
   getNotesInScale,
   removeDuplicateAndNullNotes,
   transposeRootNote,
   handleBassNoteIfNotRootNote,
-  seperateChordNameAndBassNote, 
+  seperateChordNameAndBassNote,
   getRootNoteAndChordTypeFromName,
   handleInversion,
   getAllChordTypes,
+  areArraysEqual,
 };

@@ -82,7 +82,7 @@ test('test triads with bass notes', () => {
   expect(getChordByName({ name: 'C/G' })).toStrictEqual(
     new Chord({
       notes: ['G', 'C', 'E', 'G'],
-      name: 'C',
+      name: 'C/G',
       bassNote: 'G',
       inversion: null,
       chordType: '',
@@ -92,7 +92,7 @@ test('test triads with bass notes', () => {
   expect(getChordByName({ name: 'D#m7/F#' })).toStrictEqual(
     new Chord({
       notes: ['F#', 'D#', 'F#', 'A#', 'C#'],
-      name: 'D#m7',
+      name: 'D#m7/F#',
       bassNote: 'F#',
       inversion: null,
       rootNote: 'D#',
@@ -102,7 +102,7 @@ test('test triads with bass notes', () => {
   expect(getChordByName({ name: 'Cm7/G' })).toStrictEqual(
     new Chord({
       notes: ['G', 'C', 'Eb', 'G', 'Bb'],
-      name: 'Cm7',
+      name: 'Cm7/G',
       bassNote: 'G',
       inversion: null,
       chordType: 'm7',
@@ -112,7 +112,7 @@ test('test triads with bass notes', () => {
   expect(getChordByName({ name: 'C6/9/G' })).toStrictEqual(
     new Chord({
       notes: ['G', 'C', 'E', 'G', 'A', 'D'],
-      name: 'C6/9',
+      name: 'C6/9/G',
       bassNote: 'G',
       inversion: null,
       rootNote: 'C',
@@ -122,7 +122,7 @@ test('test triads with bass notes', () => {
   expect(getChordByName({ name: 'Db7/Ab' })).toStrictEqual(
     new Chord({
       notes: ['Ab', 'Db', 'F', 'Ab', 'B'],
-      name: 'Db7',
+      name: 'Db7/Ab',
       bassNote: 'Ab',
       inversion: null,
       rootNote: 'Db',
@@ -145,7 +145,7 @@ test('test inversions', () => {
   expect(getChordByName({ name: 'C/G', inversion: 1 })).toStrictEqual(
     new Chord({
       notes: ['G', 'E', 'G', 'C'],
-      name: 'C',
+      name: 'C/G',
       bassNote: 'G',
       inversion: 1,
       chordType: '',
@@ -165,7 +165,7 @@ test('test inversions', () => {
   expect(getChordByName({ name: 'C/G', inversion: 2 })).toStrictEqual(
     new Chord({
       notes: ['G', 'G', 'C', 'E'],
-      name: 'C',
+      name: 'C/G',
       bassNote: 'G',
       inversion: 2,
       rootNote: 'C',
@@ -316,5 +316,11 @@ test('test guitar chord parsing', () => {
       inversion: null,
       bassNote: null,
     }),
+  ]);
+});
+
+test('test chord extensions', () => {
+  expect(getChordByName('Cmaj7/F#').extensions().map((c: Chord) => c.name)).toEqual([
+    'Cmaj9/F#', 'Cmaj11/F#', 'Cmaj7#11/F#', 'Cmaj13/F#',
   ]);
 });

@@ -1,5 +1,13 @@
 import { ChordT } from './types';
-import { handleInversion, getNotesFromChordType, transposeRootNote } from './util/notes';
+import {
+  handleInversion,
+  getNotesFromChordType,
+  transposeRootNote,
+  generateAllPossibleChordsFromRootNote,
+  doesArrayContainSubset,
+  handleBassNoteIfNotRootNote,
+  areArraysEqual,
+} from './util';
 
 export class Chord {
   name: string;
@@ -30,7 +38,7 @@ export class Chord {
       ...this.opts,
       inversion,
       notes: handleInversion(
-        getNotesFromChordType(this.rootNote, this.chordType), 
+        getNotesFromChordType(this.rootNote, this.chordType),
         inversion,
       ),
     });
@@ -40,11 +48,11 @@ export class Chord {
     const transposedRoot = transposeRootNote(this.rootNote, semitones);
     const transposedBass = this.bassNote ? transposeRootNote(this.bassNote, semitones) : null;
     const transposedNotes = handleInversion(
-      getNotesFromChordType(transposedRoot, this.chordType), 
+      getNotesFromChordType(transposedRoot, this.chordType),
       this.inversion,
     );
     if (transposedBass) transposedNotes.unshift(transposedBass);
-    
+
     const transposedName = `${transposedRoot}${this.chordType}`
       + `${transposedBass ? '/' + transposedBass : ''}`;
 
@@ -55,10 +63,33 @@ export class Chord {
       name: transposedName,
       bassNote: transposedBass,
     });
-  } 
+  }
+
+  public extensions() {
+    const notes = getNotesFromChordType(this.rootNote, this.chordType);
+
+    return generateAllPossibleChordsFromRootNote(this.rootNote)
+      .filter((chord: Chord) => doesArrayContainSubset(chord.notes, notes) 
+        && !areArraysEqual(chord.notes, notes))
+      .map((chord: Chord) => {
+        const {name, notes, bassNote} = handleBassNoteIfNotRootNote(
+          this.bassNote, 
+          chord.rootNote, 
+          chord.notes, 
+          chord.name,
+        );
+
+        return new Chord({
+          ...chord,
+          name,
+          notes,
+          bassNote,
+        });
+      });
+  }
 }
 
-export const constructChord = ( chord: ChordT ): Chord => {
+export const constructChord = (chord: ChordT): Chord => {
   return new Chord({
     name: chord.name,
     notes: chord.notes,

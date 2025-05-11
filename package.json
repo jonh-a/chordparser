@@ -1,6 +1,6 @@
 {
   "name": "parse-chord",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A small library for parsing chords by name or by piano/guitar voicing.",
   "main": "dist/index.js",
   "files": [
@@ -13,6 +13,13 @@
     "build": "tsc",
     "lt": "npm run lint && npm run test"
   },
+  "keywords": [
+    "music",
+    "chords",
+    "piano",
+    "guitar",
+    "music theory"
+  ],
   "author": "jonh-a",
   "license": "ISC",
   "repository": {
