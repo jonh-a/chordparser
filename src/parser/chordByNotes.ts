@@ -96,7 +96,6 @@ const findBestChordMatch = (notes: string[], possibleChords: ChordT[]): ChordT =
       else extra++;
     });
 
-    // Score: more matches, fewer extras
     const score = matches - extra;
 
     if (score > bestScore) {
