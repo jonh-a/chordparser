@@ -1,4 +1,5 @@
 import { ChordT } from '../types';
+import { Chord } from '../chord';
 import { constructChord } from '../chord';
 import {
   changeAccidential,
@@ -9,8 +10,9 @@ import {
 } from '../util';
 
 export const getChordByNotes = (notes: string[]): {
-  exactMatches: ChordT[],
-  possibleMatches: ChordT[],
+  bestMatch: Chord,
+  exactMatches: Chord[],
+  possibleMatches: Chord[],
 } => {
   const normalizedNotes = removeDuplicateAndNullNotes(notes.map(
     (note: string) => changeAccidential(note, 'sharps'),
@@ -64,8 +66,43 @@ export const getChordByNotes = (notes: string[]): {
       });
   };
 
+  const bestMatch = exactMatches?.[0] || findBestChordMatch(normalizedNotes, [...possibleMatches]);
+
   const possibleChords = possibleMatches.map((chord: ChordT) => constructChord(chord));
   const exactChords = exactMatches.map((chord: ChordT) => constructChord(chord));
+  const bestChord = constructChord(bestMatch);
 
-  return { exactMatches: exactChords, possibleMatches: possibleChords };
+  return { 
+    bestMatch: bestChord,
+    exactMatches: exactChords, 
+    possibleMatches: possibleChords,
+  };
+};
+
+const findBestChordMatch = (notes: string[], possibleChords: ChordT[]): ChordT => {
+  const inputSet = new Set(notes);
+
+  let bestMatch: ChordT | null = null;
+  let bestScore = -Infinity;
+
+  for (const chord of possibleChords) {
+    const chordSet = new Set(chord.notes);
+
+    let matches = 0;
+    let extra = 0;
+
+    chordSet.forEach((note: string) => {
+      if (inputSet.has(note)) matches++;
+      else extra++;
+    });
+
+    const score = matches - extra;
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = chord;
+    }
+  }
+
+  return bestMatch;
 };

@@ -56,7 +56,7 @@ getChordByName({ name: "Cmaj7/G", inversion: 2 });
 
 ### Getting a chord from a set of notes
 
-Use the `getChordByNotes` function to get an object containing exact and
+Use the `getChordByNotes` function to get an object containing best, exact, and
 possible matches given a set of notes.
 
 Accepts an array of notes.
@@ -65,38 +65,34 @@ Accepts an array of notes.
 import { getChordByNotes } from "parse-chord";
 
 /*
-[
-  Chord {
-    name: 'Cmaj7',
-    notes: [ 'C', 'E', 'G', 'B' ],
-    rootNote: 'C',
-    bassNote: null,
-    chordType: 'maj7',
-    inversion: null
-  }
-]
+Chord {
+  name: 'Cmaj7',
+  notes: [ 'C', 'E', 'G', 'B' ],
+  rootNote: 'C',
+  bassNote: null,
+  chordType: 'maj7',
+  inversion: null
+}
 */
-getChordByNotes(["G", "C", "E", "G", "B"]).exactMatches;
+getChordByNotes(["G", "C", "E", "G", "B"]).bestMatch;
 
 /*
-[
-  Chord {
-    name: 'D#add9/G',
-    notes: [ 'G', 'D#', 'A#', 'F' ],
-    rootNote: 'D#',
-    bassNote: 'G',
-    chordType: 'add9',
-    inversion: null
-  }
-]
+Chord {
+  name: 'D#add9/G',
+  notes: [ 'G', 'D#', 'A#', 'F' ],
+  rootNote: 'D#',
+  bassNote: 'G',
+  chordType: 'add9',
+  inversion: null
+}
 */
-getChordByNotes(["G", "A#", "D#", "F"]).exactMatches;
+getChordByNotes(["G", "A#", "D#", "F"]).bestMatch;
 ```
 
 ### Getting a chord from a guitar voicing
 
-Use the `getChordByGuitarVoicing` function to get an object containing exact and
-possible matches given a set of notes.
+Use the `getChordByGuitarVoicing` function to get an object containing best,
+exact, and possible matches given a set of notes.
 
 Accepts either:
 
@@ -108,47 +104,41 @@ Accepts either:
 import { getChordByGuitarVoicing } from "parse-chord";
 
 /*
-[
-  Chord {
-    name: 'Em',
-    notes: [ 'E', 'G', 'B' ],
-    rootNote: 'E',
-    bassNote: null,
-    chordType: 'm',
-    inversion: null
-  }
-]
+Chord {
+  name: 'Em',
+  notes: [ 'E', 'G', 'B' ],
+  rootNote: 'E',
+  bassNote: null,
+  chordType: 'm',
+  inversion: null
+}
 */
-getChordByGuitarVoicing([0, 2, 2, 0, 0, 0]).exactMatches;
+getChordByGuitarVoicing([0, 2, 2, 0, 0, 0]).bestMatch;
 
 /*
-[
-  Chord {
-    name: 'Cadd9',
-    notes: [ 'C', 'E', 'G', 'D' ],
-    rootNote: 'C',
-    bassNote: null,
-    chordType: 'add9',
-    inversion: null
-  }
-]
+Chord {
+  name: 'Cadd9',
+  notes: [ 'C', 'E', 'G', 'D' ],
+  rootNote: 'C',
+  bassNote: null,
+  chordType: 'add9',
+  inversion: null
+}
 */
-getChordByGuitarVoicing([null, 3, 2, 0, 3, null]).exactMatches;
+getChordByGuitarVoicing([null, 3, 2, 0, 3, null]).bestMatch;
 
 /*
-[
-  Chord {
-    name: 'Gadd9',
-    notes: [ 'G', 'B', 'D', 'A' ],
-    rootNote: 'G',
-    bassNote: null,
-    chordType: 'add9',
-    inversion: null
-  }
-]
+Chord {
+  name: 'Gadd9',
+  notes: [ 'G', 'B', 'D', 'A' ],
+  rootNote: 'G',
+  bassNote: null,
+  chordType: 'add9',
+  inversion: null
+}
 */
 getChordByGuitarVoicing({
   tuning: ["D", "A", "D", "G", "A", "D"],
   notes: [5, 5, 0, 4, 0, 5],
-}).exactMatches;
+}).bestMatch;
 ```

@@ -1,6 +1,6 @@
 {
   "name": "parse-chord",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A small library for parsing chords by name or by piano/guitar voicing.",
   "main": "dist/index.js",
   "files": [
