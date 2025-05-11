@@ -82,28 +82,15 @@ export const getChordByNotes = (notes: string[]): {
 const findBestChordMatch = (notes: string[], possibleChords: ChordT[]): ChordT => {
   const inputSet = new Set(notes);
 
-  let bestMatch: ChordT | null = null;
-  let bestScore = -Infinity;
+  return possibleChords.reduce((bestMatch, chord) => {
+    const matches = chord.notes.filter(note => inputSet.has(note)).length;
+    const extras = chord.notes.length - matches;
+    const score = matches - extras;
 
-  for (const chord of possibleChords) {
-    const chordSet = new Set(chord.notes);
+    const bestScore = bestMatch
+      ? bestMatch.notes.filter(note => inputSet.has(note)).length - (bestMatch.notes.length - bestMatch.notes.filter(note => inputSet.has(note)).length)
+      : -Infinity;
 
-    let matches = 0;
-    let extra = 0;
-
-    chordSet.forEach((note: string) => {
-      if (inputSet.has(note)) matches++;
-      else extra++;
-    });
-
-    // Score: more matches, fewer extras
-    const score = matches - extra;
-
-    if (score > bestScore) {
-      bestScore = score;
-      bestMatch = chord;
-    }
-  }
-
-  return bestMatch;
+    return score > bestScore ? chord : bestMatch;
+  });
 };
