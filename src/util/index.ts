@@ -1,4 +1,4 @@
-import { doesArrayContainSubset } from './misc';
+import { doesArrayContainSubset, areArraysEqual } from './misc';
 import {
   chordTypes,
   notesAsFlats,
@@ -38,4 +38,5 @@ export {
   getRootNoteAndChordTypeFromName,
   handleInversion,
   getAllChordTypes,
+  areArraysEqual,
 };

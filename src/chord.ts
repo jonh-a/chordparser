@@ -5,6 +5,8 @@ import {
   transposeRootNote,
   generateAllPossibleChordsFromRootNote,
   doesArrayContainSubset,
+  handleBassNoteIfNotRootNote,
+  areArraysEqual,
 } from './util';
 
 export class Chord {
@@ -64,13 +66,26 @@ export class Chord {
   }
 
   public extensions() {
-    return generateAllPossibleChordsFromRootNote(this.rootNote)
-      .filter((chord: Chord) => doesArrayContainSubset(chord.notes, this.notes));
-  }
+    const notes = getNotesFromChordType(this.rootNote, this.chordType);
 
-  public subsets() {
     return generateAllPossibleChordsFromRootNote(this.rootNote)
-      .filter((chord: Chord) => doesArrayContainSubset(this.notes, chord.notes));
+      .filter((chord: Chord) => doesArrayContainSubset(chord.notes, notes) 
+        && !areArraysEqual(chord.notes, notes))
+      .map((chord: Chord) => {
+        const {name, notes, bassNote} = handleBassNoteIfNotRootNote(
+          this.bassNote, 
+          chord.rootNote, 
+          chord.notes, 
+          chord.name,
+        );
+
+        return new Chord({
+          ...chord,
+          name,
+          notes,
+          bassNote,
+        });
+      });
   }
 }
 

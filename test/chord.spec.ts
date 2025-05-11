@@ -102,4 +102,3 @@ test('test chord transpositions', () => {
     rootNote: 'E',
   }));
 });
-
