@@ -66,7 +66,7 @@ export const getChordByNotes = (notes: string[]): {
       });
   };
 
-  const bestMatch = exactMatches?.[0] || findBestChordMatch(normalizedNotes, [...possibleMatches])
+  const bestMatch = exactMatches?.[0] || findBestChordMatch(normalizedNotes, [...possibleMatches]);
 
   const possibleChords = possibleMatches.map((chord: ChordT) => constructChord(chord));
   const exactChords = exactMatches.map((chord: ChordT) => constructChord(chord));
@@ -94,7 +94,7 @@ const findBestChordMatch = (notes: string[], possibleChords: ChordT[]): ChordT =
     chordSet.forEach((note: string) => {
       if (inputSet.has(note)) matches++;
       else extra++;
-    })
+    });
 
     // Score: more matches, fewer extras
     const score = matches - extra;
@@ -106,4 +106,4 @@ const findBestChordMatch = (notes: string[], possibleChords: ChordT[]): ChordT =
   }
 
   return bestMatch;
-}
+};
